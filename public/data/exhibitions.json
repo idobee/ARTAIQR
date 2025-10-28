@@ -1,0 +1,182 @@
+[
+  {
+    "id": "ex-1",
+    "title": "도시의 속삭임: 이수민 사진전",
+    "description": "빛과 그림자를 통해 현대 도시의 서정성을 탐구하는 이수민 작가의 개인전.",
+    "startDate": "2024.03.15",
+    "endDate": "2024.05.10",
+    "thumbnailImage": "https://picsum.photos/seed/ex-1/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-2",
+    "title": "먹의 재발견: 김도윤, 송지아 2인전",
+    "description": "전통 수묵의 정신을 현대적으로 계승하는 두 작가의 만남.",
+    "startDate": "2024.04.01",
+    "endDate": "2024.06.20",
+    "thumbnailImage": "https://picsum.photos/seed/ex-2/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-3",
+    "title": "물질의 변용",
+    "description": "박서아, 윤채원, 오건우 작가가 참여하여 다양한 재료의 예술적 가능성을 모색하는 그룹전.",
+    "startDate": "2024.05.20",
+    "endDate": "2024.08.15",
+    "thumbnailImage": "https://picsum.photos/seed/ex-3/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-4",
+    "title": "색채의 향연: 최준서 개인전",
+    "description": "최준서 작가의 강렬하고 역동적인 추상 회화 신작들을 선보입니다.",
+    "startDate": "2024.06.10",
+    "endDate": "2024.09.05",
+    "thumbnailImage": "https://picsum.photos/seed/ex-4/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-5",
+    "title": "경계의 저편",
+    "description": "정하윤, 임현우, 황시우 작가가 참여하여 기술과 예술의 융합을 탐구하는 미디어 아트 특별전.",
+    "startDate": "2024.07.01",
+    "endDate": "2024.09.30",
+    "thumbnailImage": "https://picsum.photos/seed/ex-5/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-6",
+    "title": "오늘의 얼굴: 강지호 초상화전",
+    "description": "극사실주의 기법으로 동시대를 살아가는 우리들의 모습을 담아낸 전시.",
+    "startDate": "2024.08.05",
+    "endDate": "2024.10.20",
+    "thumbnailImage": "https://picsum.photos/seed/ex-6/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-7",
+    "title": "꿈의 해석: 한유준 개인전",
+    "description": "초현실주의 화가 한유준이 그려내는 신비롭고 환상적인 무의식의 세계.",
+    "startDate": "2024.09.01",
+    "endDate": "2024.11.30",
+    "thumbnailImage": "https://picsum.photos/seed/ex-7/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-8",
+    "title": "구축된 풍경",
+    "description": "안소율, 서도현, 유민준 작가가 각자의 시선으로 재구성한 현대의 풍경.",
+    "startDate": "2024.10.15",
+    "endDate": "2025.01.10",
+    "thumbnailImage": "https://picsum.photos/seed/ex-8/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-9",
+    "title": "보이지 않는 관계들",
+    "description": "문지민, 나예은 작가가 참여하여 인간 관계의 다층적인 모습을 섬세하게 조명하는 2인전.",
+    "startDate": "2024.11.20",
+    "endDate": "2025.02.15",
+    "thumbnailImage": "https://picsum.photos/seed/ex-9/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-10",
+    "title": "생태 감각: 예술로 환경을 말하다",
+    "description": "고태양, 백하린 작가가 참여하여 동시대 환경 문제에 대한 예술적 화두를 던지는 기획전.",
+    "startDate": "2024.12.01",
+    "endDate": "2025.03.20",
+    "thumbnailImage": "https://picsum.photos/seed/ex-10/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-11",
+    "title": "젊은 시선 2024",
+    "description": "주목받는 신진 작가 5인을 조명하는 연례 기획전.",
+    "startDate": "2024.03.01",
+    "endDate": "2024.04.30",
+    "thumbnailImage": "https://picsum.photos/seed/ex-11/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-12",
+    "title": "드로잉의 모든 것",
+    "description": "선이라는 가장 기본적인 조형 언어의 무한한 가능성을 탐구하는 그룹전.",
+    "startDate": "2024.04.10",
+    "endDate": "2024.06.30",
+    "thumbnailImage": "https://picsum.photos/seed/ex-12/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-13",
+    "title": "시간의 조각들: 서도현 개인전",
+    "description": "기억과 풍화의 흔적을 캔버스에 담아내는 서도현 작가의 회고전.",
+    "startDate": "2024.05.15",
+    "endDate": "2024.07.31",
+    "thumbnailImage": "https://picsum.photos/seed/ex-13/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-14",
+    "title": "가상의 정원",
+    "description": "디지털 기술로 구현된 새로운 자연의 모습을 선보이는 미디어 아트전.",
+    "startDate": "2024.06.25",
+    "endDate": "2024.09.15",
+    "thumbnailImage": "https://picsum.photos/seed/ex-14/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-15",
+    "title": "한국의 추상: 정신을 그리다",
+    "description": "한국 추상미술 1세대부터 현재까지의 흐름을 조망하는 특별 기획전.",
+    "startDate": "2024.07.20",
+    "endDate": "2024.10.31",
+    "thumbnailImage": "https://picsum.photos/seed/ex-15/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-16",
+    "title": "이야기꾼들: 신은서, 나예은 2인전",
+    "description": "전통과 현대를 오가며 자신만의 서사를 만들어가는 두 여성 작가의 이야기.",
+    "startDate": "2024.08.10",
+    "endDate": "2024.11.10",
+    "thumbnailImage": "https://picsum.photos/seed/ex-16/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-17",
+    "title": "조각의 현재",
+    "description": "동시대 한국 조각의 다양한 양상과 미래를 조망하는 그룹전.",
+    "startDate": "2024.09.20",
+    "endDate": "2024.12.20",
+    "thumbnailImage": "https://picsum.photos/seed/ex-17/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-18",
+    "title": "사이의 공간",
+    "description": "설치 미술을 통해 우리가 무심코 지나치는 공간의 의미를 되새겨보는 전시.",
+    "startDate": "2024.10.05",
+    "endDate": "2025.01.05",
+    "thumbnailImage": "https://picsum.photos/seed/ex-18/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-19",
+    "title": "판화의 힘: 목판에서 디지털까지",
+    "description": "전통 목판화부터 현대 디지털 판화까지, 판화 매체의 변천사를 한눈에 볼 수 있는 전시.",
+    "startDate": "2024.11.15",
+    "endDate": "2025.02.28",
+    "thumbnailImage": "https://picsum.photos/seed/ex-19/600/400",
+    "artistIds": []
+  },
+  {
+    "id": "ex-20",
+    "title": "자화상: 나를 만나다",
+    "description": "다양한 작가들이 각자의 방식으로 표현한 자화상을 통해 '나'라는 존재를 성찰하는 기획전.",
+    "startDate": "2024.12.10",
+    "endDate": "2025.03.31",
+    "thumbnailImage": "https://picsum.photos/seed/ex-20/600/400",
+    "artistIds": []
+  }
+]

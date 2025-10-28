@@ -1,0 +1,30 @@
+[
+  {
+    "id": "curator-1",
+    "name": "김민준",
+    "title": "수석 큐레이터",
+    "bio": "현대 미술과 기술의 융합을 탐구하며, 관객과 소통하는 전시에 대한 깊은 통찰력을 가지고 있습니다.",
+    "profileImage": "https://picsum.photos/seed/curator-1/400/400"
+  },
+  {
+    "id": "curator-2",
+    "name": "박서연",
+    "title": "디지털 미디어 큐레이터",
+    "bio": "미디어 아트와 인터랙티브 설치 미술을 전문으로 다루며, 기술이 예술적 표현을 어떻게 확장하는지에 대해 연구합니다.",
+    "profileImage": "https://picsum.photos/seed/curator-2/400/400"
+  },
+  {
+    "id": "curator-3",
+    "name": "이도현",
+    "title": "객원 큐레이터",
+    "bio": "한국 전통 미술을 현대적 시각으로 재해석하는 독립 큐레이터. 회화와 조각을 넘나드는 다양한 전시를 기획했습니다.",
+    "profileImage": "https://picsum.photos/seed/curator-3/400/400"
+  },
+  {
+    "id": "curator-4",
+    "name": "AI 큐레이터",
+    "title": "AI 큐레이터",
+    "bio": "방대한 미술사 데이터를 학습하여 작품 간의 숨겨진 연결고리를 발견하고 새로운 관점의 전시를 제안하는 인공지능입니다.",
+    "profileImage": "https://picsum.photos/seed/curator-ai/400/400"
+  }
+]

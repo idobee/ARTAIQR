@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import ExhibitionCard from '../components/common/ExhibitionCard';
 import Button from '../components/common/Button';
@@ -10,62 +10,65 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 
 const HomePage: React.FC = () => {
-  const { 
-    heroContents, 
-    artists, 
-    exhibitions, 
-    artNews,
-    curations,
-    featuredArtistIds, 
-    featuredExhibitionIds,
+  const {
+    heroContents = [],
+    artists = [],
+    exhibitions = [],
+    artNews = [],
+    curations = [],
+    featuredArtistIds = [],
+    featuredExhibitionIds = [],
     loading,
-    error
+    error,
   } = useData();
 
+  // Hooks: 항상 조건부 return보다 위에 둡니다.
   const [exhibitionIndex, setExhibitionIndex] = useState(0);
   const [heroIndex, setHeroIndex] = useState(0);
   const itemsPerPage = 3;
 
-  // 1. 데이터 사용 전에 로딩 및 에러 상태를 먼저 처리합니다.
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  const featuredArtists = useMemo(
+    () => artists.filter(a => featuredArtistIds.includes(a.id)),
+    [artists, featuredArtistIds]
+  );
 
-  if (error) {
-    return <ErrorMessage message={error} />;
-  }
-  
-  // 2. 데이터가 로드된 후에, 데이터를 가공하여 변수를 선언합니다.
-  const featuredArtists = artists.filter(artist => featuredArtistIds.includes(artist.id));
-  const featuredExhibitions = exhibitions.filter(exhibition => featuredExhibitionIds.includes(exhibition.id));
-  
-  // 3. 선언된 변수를 사용하여 훅을 정의합니다.
+  const featuredExhibitions = useMemo(
+    () => exhibitions.filter(e => featuredExhibitionIds.includes(e.id)),
+    [exhibitions, featuredExhibitionIds]
+  );
+
   const handleExhibitionPrev = useCallback(() => {
-    if (featuredExhibitions.length === 0) return;
-    setExhibitionIndex((prevIndex) => 
-      prevIndex === 0 ? Math.max(0, featuredExhibitions.length - itemsPerPage) : prevIndex - 1
-    );
-  }, [featuredExhibitions.length, itemsPerPage]);
+    const len = featuredExhibitions.length;
+    if (!len) return;
+    setExhibitionIndex(prev => (prev === 0 ? Math.max(0, len - itemsPerPage) : prev - 1));
+  }, [featuredExhibitions, itemsPerPage]);
 
   const handleExhibitionNext = useCallback(() => {
-    if (featuredExhibitions.length === 0) return;
-    setExhibitionIndex((prevIndex) =>
-      prevIndex >= featuredExhibitions.length - itemsPerPage ? 0 : prevIndex + 1
-    );
-  }, [featuredExhibitions.length, itemsPerPage]);
-  
+    const len = featuredExhibitions.length;
+    if (!len) return;
+    setExhibitionIndex(prev => (prev >= len - itemsPerPage ? 0 : prev + 1));
+  }, [featuredExhibitions, itemsPerPage]);
+
   useEffect(() => {
-    const timer = setInterval(handleExhibitionNext, 5000);
-    return () => clearInterval(timer);
+    const id = setInterval(handleExhibitionNext, 5000);
+    return () => clearInterval(id);
   }, [handleExhibitionNext]);
 
   useEffect(() => {
-    if (!heroContents || heroContents.length === 0) return;
-    const heroTimer = setInterval(() => {
-      setHeroIndex((prevIndex) => (prevIndex + 1) % heroContents.length);
-    }, 30000); // 롤링 간격을 30초로 변경
-    return () => clearInterval(heroTimer);
-  }, [heroContents]);
+    if (!heroContents.length) return;
+    const id = setInterval(() => {
+      setHeroIndex(prev => (prev + 1) % heroContents.length);
+    }, 30000);
+    return () => clearInterval(id);
+  }, [heroContents.length]);
+
+  useEffect(() => {
+    setExhibitionIndex(prev => Math.min(prev, Math.max(0, featuredExhibitions.length - 1)));
+  }, [featuredExhibitions.length]);
+
+  // Guard return은 모든 훅 선언 이후에 위치
+  if (loading) return <LoadingSpinner />;
+  if (error)   return <ErrorMessage message={error} />;
 
   // 4. 렌더링에 필요한 나머지 변수들을 계산합니다.
   const visibleExhibitions = featuredExhibitions.slice(exhibitionIndex, exhibitionIndex + itemsPerPage);

@@ -1,0 +1,34 @@
+[
+  {
+    "title": "예술과 지능의 만남222",
+    "subtitle": "전시를 발견하고, 작가와 소통하며, AI 기반 큐레이션 도구로 여러분만의 이야기를 만들어보세요.",
+    "imageUrl": "https://picsum.photos/seed/hero1/1600/900",
+    "button1_text": "전시 둘러보기",
+    "button1_link": "/exhibitions",
+    "button2_text": "/education"
+  },
+  {
+    "title": "점, 선, 면: 우주를 그리다",
+    "subtitle": "한국 추상미술의 선구자, 김환기 화백의 뉴욕 시대 작품들을 만나보세요.",
+    "imageUrl": "https://picsum.photos/seed/ex-1/1600/900",
+    "button1_text": "전시 상세 보기",
+    "button1_link": "/exhibitions",
+    "button2_text": "/artists"
+  },
+  {
+    "title": "미래를 큐레이팅하다",
+    "subtitle": "AI 큐레이터 교육 프로그램에 참여하여 예술과 기술의 경계를 허무는 전문가로 거듭나세요.",
+    "imageUrl": "https://picsum.photos/seed/edu/1600/900",
+    "button1_text": "더 알아보기",
+    "button1_link": "/education",
+    "button2_text": "/login"
+  },
+  {
+    "title": "황소의 숨결",
+    "subtitle": "민족의 기상을 담은 이중섭 화백의 강렬한 필치를 직접 느껴보세요.",
+    "imageUrl": "https://picsum.photos/seed/ex-2/1600/900",
+    "button1_text": "전시 바로가기",
+    "button1_link": "/exhibitions",
+    "button2_text": "/curation"
+  }
+]

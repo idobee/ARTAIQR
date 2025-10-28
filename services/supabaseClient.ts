@@ -1,10 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://nbafgyzvieauspftfykt.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYWZneXp2aWVhdXNwZnRmeWt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MTA4NTUsImV4cCI6MjA3NTQ4Njg1NX0.vBXfI2j85BkFFVfM02gKwU8t1u6hYhe-qzbaJMg6xI0';
+const url = import.meta.env.VITE_SUPABASE_URL;
+const anon = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL and Anon Key must be provided.');
+if (!url || !anon) {
+  console.error('Missing Supabase env. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// 빈 문자열로도 객체는 만들어지므로, 최소한 빈 문자열 방지
+export const supabase = createClient(url || 'about:blank', anon || 'about:blank');

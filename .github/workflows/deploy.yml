@@ -18,16 +18,26 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+<<<<<<< HEAD
       - run: npm ci
        
+=======
+      # lockfile가 없으면 npm ci가 실패하므로 install 사용
+      - run: npm install
+>>>>>>> 1dbec1c (setup gh-pages)
       - run: npm run build
-      - name: Add 404.html for SPA
-        run: copy dist\\index.html dist\\404.html
+      - name: Add SPA 404 and .nojekyll
+        shell: pwsh
+        run: |
+          Copy-Item dist/index.html dist/404.html
+          New-Item -ItemType File dist/.nojekyll -Force | Out-Null
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
   deploy:
     needs: build
     runs-on: windows-latest
+    environment:
+      name: github-pages
     steps:
       - uses: actions/deploy-pages@v4

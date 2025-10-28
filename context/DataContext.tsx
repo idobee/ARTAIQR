@@ -55,48 +55,32 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '/'); // 끝에 슬래시 보장
+    const dataUrl = (file: string) => `${base}data/${file}`;
+
+    const files = [
+      'artists.json','artworks.json','curators.json','curations.json','exhibitions.json',
+      'heroContents.json','art-news.json','educationHistory.json','educationCurriculum.json',
+      'featured-artist-ids.json','featured-exhibition-ids.json'
+    ];
+
+    (async () => {
       try {
-        const fileNames = [
-          'artists', 'artworks', 'curators', 'curations', 'exhibitions', 
-          'heroContents', 'art-news', 'educationHistory', 'educationCurriculum', // educationCurriculum을 로드 목록에 추가
-          'featured-artist-ids', 'featured-exhibition-ids'
-        ];
-        
-        const responses = await Promise.all(
-          fileNames.map(file => fetch(`/data/${file}.json`))
-        );
-
-        responses.forEach(res => {
-          if (!res.ok) {
-            throw new Error(`Failed to fetch ${res.url}`);
-          }
-        });
-
-        const jsonData = await Promise.all(responses.map(res => res.json()));
-
+        const resps = await Promise.all(files.map(f => fetch(dataUrl(f))));
+        resps.forEach(r => { if (!r.ok) throw new Error(`Failed: ${r.url}`); });
+        const json = await Promise.all(resps.map(r => r.json()));
         setData({
-          artists: jsonData[0],
-          artworks: jsonData[1],
-          curators: jsonData[2],
-          curations: jsonData[3],
-          exhibitions: jsonData[4],
-          heroContents: jsonData[5],
-          artNews: jsonData[6],
-          educationHistory: jsonData[7],
-          educationCurriculum: jsonData[8], // 가져온 데이터를 상태에 설정합니다.
-          featuredArtistIds: jsonData[9],
-          featuredExhibitionIds: jsonData[10],
+          artists: json[0], artworks: json[1], curators: json[2], curations: json[3],
+          exhibitions: json[4], heroContents: json[5], artNews: json[6],
+          educationHistory: json[7], educationCurriculum: json[8],
+          featuredArtistIds: json[9], featuredExhibitionIds: json[10],
         });
-        
       } catch (e: any) {
         setError(e.message);
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchData();
+    })();
   }, []);
 
   return (

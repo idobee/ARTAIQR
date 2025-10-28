@@ -1,0 +1,78 @@
+[
+  {
+    "id": "cur-1",
+    "title": "빛의 언어3",
+    "excerpt": "인상주의 화가들이 어떻게 빛의 찰나를 포착했는가에 대한 탐구. 모네, 르누아르 등의 작품을 통해 빛과 색의 혁명을 조명합니다.",
+    "artistIds": [
+      "artist-18",
+      "artist-20"
+    ],
+    "artworkIds": [
+      "art-026",
+      "art-028",
+      "art-030"
+    ],
+    "exhibitionIds": [
+      "ex-8",
+      "ex-13"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=qmH-qg_9p7s",
+    "bShowCase": false
+  },
+  {
+    "id": "cur-2",
+    "title": "내면의 외침: 표현주의의 대가들",
+    "excerpt": "뭉크와 쉴레의 작품을 중심으로, 20세기 초 예술가들이 겪었던 내면의 고통과 사회적 불안을 어떻게 예술로 승화시켰는지 살펴봅니다.",
+    "artistIds": [
+      "artist-4",
+      "artist-6"
+    ],
+    "artworkIds": [
+      "art-007",
+      "art-011",
+      "art-029"
+    ],
+    "exhibitionIds": [
+      "ex-4",
+      "ex-6"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=qmH-qg_9p7s",
+    "bShowCase": false
+  },
+  {
+    "id": "cur-3",
+    "title": "형태의 해체와 재구성",
+    "excerpt": "피카소와 브라크가 이끈 입체주의의 여정. 단일 시점에서 벗어나 다각적인 시점으로 대상을 포착하려는 시도를 분석합니다.",
+    "artistIds": [
+      "artist-13"
+    ],
+    "artworkIds": [
+      "art-021"
+    ],
+    "exhibitionIds": [
+      "ex-8"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=qmH-qg_9p7s",
+    "bShowCase": false
+  },
+  {
+    "id": "cur-4",
+    "title": "고요의 미학: 단색화",
+    "excerpt": "1970년대 한국을 대표하는 단색화의 정신과 철학. 비움과 채움을 통해 한국적 미니멀리즘의 정수를 보여줍니다.",
+    "artistIds": [
+      "artist-2",
+      "artist-9"
+    ],
+    "artworkIds": [
+      "art-003",
+      "art-017"
+    ],
+    "exhibitionIds": [
+      "ex-2",
+      "ex-12",
+      "ex-15"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=5qap5aO4i9A",
+    "bShowCase": false
+  }
+]
