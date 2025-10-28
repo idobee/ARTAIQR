@@ -12,13 +12,23 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    # Environment에 Secrets를 넣어둔 경우 아래 줄의 주석을 해제하세요.
+    # environment: github-pages
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'npm' }
+        with:
+          node-version: 20
+          cache: 'npm'
+      # 선택: .env 파일 생성(빌드 시 확실히 주입)
+      - name: Create .env for Vite
+        shell: pwsh
+        run: |
+          "VITE_SUPABASE_URL=${{ env.VITE_SUPABASE_URL }}" | Out-File -Encoding utf8 -FilePath .\.env
+          "VITE_SUPABASE_ANON_KEY=${{ env.VITE_SUPABASE_ANON_KEY }}" | Add-Content .\.env
       - run: npm install
       - run: npm run build
       - name: Add SPA 404 and .nojekyll
@@ -27,10 +37,12 @@ jobs:
           Copy-Item dist/index.html dist/404.html
           New-Item -ItemType File dist/.nojekyll -Force | Out-Null
       - uses: actions/upload-pages-artifact@v3
-        with: { path: dist }
+        with:
+          path: dist
   deploy:
     needs: build
     runs-on: windows-latest
-    environment: { name: github-pages }
+    environment:
+      name: github-pages
     steps:
       - uses: actions/deploy-pages@v4
