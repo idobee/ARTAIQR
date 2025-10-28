@@ -12,12 +12,13 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+        with: { node-version: 20, cache: 'npm' }
       - run: npm install
       - run: npm run build
       - name: Add SPA 404 and .nojekyll
@@ -26,12 +27,10 @@ jobs:
           Copy-Item dist/index.html dist/404.html
           New-Item -ItemType File dist/.nojekyll -Force | Out-Null
       - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+        with: { path: dist }
   deploy:
     needs: build
     runs-on: windows-latest
-    environment:
-      name: github-pages
+    environment: { name: github-pages }
     steps:
       - uses: actions/deploy-pages@v4
