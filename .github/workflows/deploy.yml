@@ -18,13 +18,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-<<<<<<< HEAD
-      - run: npm ci
-       
-=======
-      # lockfile가 없으면 npm ci가 실패하므로 install 사용
       - run: npm install
->>>>>>> 1dbec1c (setup gh-pages)
       - run: npm run build
       - name: Add SPA 404 and .nojekyll
         shell: pwsh
