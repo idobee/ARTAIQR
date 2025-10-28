@@ -19,7 +19,7 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      - run: npm run sync-data
+       
       - run: npm run build
       - name: Add 404.html for SPA
         run: copy dist\\index.html dist\\404.html
