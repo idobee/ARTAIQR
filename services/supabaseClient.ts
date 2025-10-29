@@ -1,11 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-const url = import.meta.env.VITE_SUPABASE_URL;
-const anon = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+const anon = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
 if (!url || !anon) {
   console.error('Missing Supabase env. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
 }
+export const hasSupabaseEnv =
+  typeof url === 'string' &&
+  typeof anon === 'string' &&
+  /^https?:\/\//i.test(url) &&
+  anon.length > 0;
 
-// 빈 문자열로도 객체는 만들어지므로, 최소한 빈 문자열 방지
-export const supabase = createClient(url || 'about:blank', anon || 'about:blank');
+export const supabase: SupabaseClient | null = hasSupabaseEnv
+  ? createClient(url!, anon!)
+  : null;

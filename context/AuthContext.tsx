@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { User } from '@supabase/supabase-js';
-import { supabase, hasSupabaseEnv } from '../services/supabaseClient';
+import { supabase } from '../services/supabaseClient';
+
 const { createContext, useContext, useState, useEffect } = React;
 
 interface AuthContextType {
@@ -11,37 +12,35 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const hasSupabaseEnv = !!supabase;
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!hasSupabaseEnv || !supabase) { setLoading(false); return; }
-
-    const init = async () => {
+    const run = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
       setLoading(false);
     };
-    init();
+    run();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
+
     return () => subscription?.unsubscribe();
   }, []);
 
-  const value = {
-    user,
-    loading,
-    login: async () => { if (supabase) await supabase.auth.signInWithOAuth({ provider: 'google' }); },
-    logout: async () => { if (supabase) await supabase.auth.signOut(); },
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      login: () => supabase.auth.signInWithOAuth({ provider: 'google' }),
+      logout: () => supabase.auth.signOut(),
+    }}>
       {!loading && children}
     </AuthContext.Provider>
   );
