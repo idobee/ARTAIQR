@@ -22,11 +22,26 @@
       };
     </script>
 
-    <!-- favicon (Vite가 %BASE_URL%로 치환) -->
+    <!-- favicon (Vite가 %BASE_URL%를 배포 경로로 치환) -->
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+
+    <!-- Tailwind가 로드되지 못했을 때를 위한 최소 폴백 -->
+    <style>
+      html, body, #root { height: 100%; }
+      body { margin: 0; }
+      body.fallback {
+        background: #0b0b0b; color: #f5f5f5; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      }
+    </style>
   </head>
   <body class="bg-brand-dark text-brand-light font-sans">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Tailwind 로드 실패 시 폴백 클래스 적용
+      if (!document.documentElement.classList.contains('tw')) {
+        document.body.classList.add('fallback');
+      }
+    </script>
   </body>
 </html>
