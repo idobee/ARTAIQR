@@ -1,14 +1,14 @@
-
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Artwork, CurationAudience, CurationLength, CurationTone } from '../types';
 
-if (!process.env.API_KEY) {
-  // In a real app, you'd want to handle this more gracefully.
-  // For this example, we assume it's set in the environment.
-  console.warn("API_KEY environment variable not set. AI features will not work.");
-}
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+let genAI: GoogleGenerativeAI | null = null;
+if (API_KEY && API_KEY.length > 0) {
+  genAI = new GoogleGenerativeAI(API_KEY);
+} else {
+  console.warn('VITE_GEMINI_API_KEY is missing. Gemini features will be disabled.');
+}
 
 interface CurationParams {
   artworks: Artwork[];
@@ -32,10 +32,8 @@ const generateLengthString = (length: CurationLength): string => {
 }
 
 export const generateCuration = async ({ artworks, theme, audience, length, tone }: CurationParams): Promise<string> => {
-  if (!process.env.API_KEY) {
-    return Promise.reject(new Error("API key is not configured."));
-  }
-
+  if (!genAI) return 'AI 기능이 비활성화되어 기본 안내를 표시합니다.';
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
   const artworkList = artworks.map(art => `* ${art.title} - ${art.artistName} (${art.year})`).join('\n');
 
   const prompt = `
@@ -52,11 +50,11 @@ ${artworkList}
 `;
 
   try {
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+    const response = await model.generateContent({
+        model: 'gemini-1.5-flash',
         contents: prompt
     });
-    return response.text;
+    return response.response.text();
   } catch (error) {
     console.error("Error generating curation:", error);
     throw new Error("Failed to generate curation text from AI.");

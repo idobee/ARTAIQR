@@ -242,8 +242,8 @@ const HomePage: React.FC = () => {
             ))}
         </div>
         <div className="flex justify-center items-center gap-4">
-            <Link to="/ai-curator"><Button>AI 큐레이터 사용해보기</Button></Link>
-            <Link to="/curation"><Button variant="secondary">모든 큐레이션 보기</Button></Link>
+          <Link to="/ai-curator"><Button>AI 큐레이터 사용해보기</Button></Link>
+          <Link to="/curation"><Button variant="secondary">모든 큐레이션 보기</Button></Link>
         </div>
       </section>
       
