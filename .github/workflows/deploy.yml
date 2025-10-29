@@ -18,9 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+        with: { node-version: 20, cache: 'npm' }
       - run: npm install
       - run: npm run build
       - name: Add SPA 404 and .nojekyll
@@ -31,11 +29,9 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-
   deploy:
     needs: build
     runs-on: windows-latest
-    environment:
-      name: github-pages
+    environment: { name: github-pages }
     steps:
       - uses: actions/deploy-pages@v4
