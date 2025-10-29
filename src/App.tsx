@@ -7,8 +7,7 @@ import ExhibitionsPage from '../pages/exhibitionsPAge';
 import ArtworksPage from '../pages/artworksPage';
 import ArtistsPage from '../pages/artistsPage';
 import CurationPage from '../pages/CurationPage';
-import EducationPage from '../pages/educationPage';
-import AICuratorToolPage from '../pages/AICuratorToolPage';
+import EducationPage from '../pages/EducationPage'; // ← 대소문자 일치
 
 const App: React.FC = () => (
   <>
@@ -20,8 +19,7 @@ const App: React.FC = () => (
         <Route path="/artworks" element={<ArtworksPage />} />
         <Route path="/artists" element={<ArtistsPage />} />
         <Route path="/curation" element={<CurationPage />} />
-        <Route path="/education" element={<EducationPage />} />
-        <Route path="/ai-curator" element={<AICuratorToolPage />} />
+        <Route path="/education" element={<EducationPage />} /> {/* ← 여기 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </main>
