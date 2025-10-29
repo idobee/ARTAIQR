@@ -2,44 +2,12 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>Art AI Curator</title>
+    <title>Art AI Curation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Tailwind CDN + 커스텀 설정 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Cormorant Garamond', 'serif'],
-            },
-            colors: {
-              'brand-gold': '#C0A062',
-              'brand-dark': '#111111',
-              'brand-light': '#F5F5F5',
-              'brand-gray': '#333333',
-            },
-          },
-        },
-      };
-    </script>
-
-    <!-- favicon (배포 시 /ARTAIQR/ 경로에 맞게 치환됨) -->
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
   </head>
   <body class="bg-brand-dark text-brand-light font-sans">
     <div id="root"></div>
-    <!-- 개발 서버용 엔트리. 빌드 시 번들로 대체됨 -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
