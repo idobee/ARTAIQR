@@ -9,102 +9,132 @@ import ChevronRightIcon from '../components/icons/ChevronRightIcon';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 
+const normalizeSrc = (src?: string | null): string | undefined => {
+  if (!src) return undefined;
+  if (/^(https?:)?\/\//i.test(src) || src.startsWith('data:')) return src;
+  const clean = src.trim().replace(/^\.?\/?public\/+/i, '').replace(/^\/+/, '');
+  if (!clean) return undefined;
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '/'); // '/ARTAIQR/'
+  return `${base}${clean}`;
+};
+
 const HomePage: React.FC = () => {
+  // 기본값 추가로 안전하게
   const {
-    heroContents = [],
     artists = [],
     exhibitions = [],
-    artNews = [],
     curations = [],
+    heroContents = [],
+    curators = [],
     featuredArtistIds = [],
     featuredExhibitionIds = [],
     loading,
     error,
-  } = useData();
-
-  // Hooks: 항상 조건부 return보다 위에 둡니다.
-  const [exhibitionIndex, setExhibitionIndex] = useState(0);
-  const [heroIndex, setHeroIndex] = useState(0);
-  const itemsPerPage = 3;
-
-  const featuredArtists = useMemo(
-    () => artists.filter(a => featuredArtistIds.includes(a.id)),
-    [artists, featuredArtistIds]
-  );
+  } = useData() as any;
 
   const featuredExhibitions = useMemo(
     () => exhibitions.filter(e => featuredExhibitionIds.includes(e.id)),
     [exhibitions, featuredExhibitionIds]
   );
 
+  const featuredArtists = useMemo(
+    () => artists.filter(a => featuredArtistIds.includes(a.id)),
+    [artists, featuredArtistIds]
+  );
+
+  const [exhibitionIndex, setExhibitionIndex] = useState(0);
+  const [heroIndex, setHeroIndex] = useState(0);
+  const itemsPerPage = 3;
+
   const handleExhibitionPrev = useCallback(() => {
-    const len = featuredExhibitions.length;
-    if (!len) return;
-    setExhibitionIndex(prev => (prev === 0 ? Math.max(0, len - itemsPerPage) : prev - 1));
-  }, [featuredExhibitions, itemsPerPage]);
+    if (featuredExhibitions.length === 0) return;
+    setExhibitionIndex((prevIndex) => 
+      prevIndex === 0 ? Math.max(0, featuredExhibitions.length - itemsPerPage) : prevIndex - 1
+    );
+  }, [featuredExhibitions.length, itemsPerPage]);
 
   const handleExhibitionNext = useCallback(() => {
-    const len = featuredExhibitions.length;
-    if (!len) return;
-    setExhibitionIndex(prev => (prev >= len - itemsPerPage ? 0 : prev + 1));
-  }, [featuredExhibitions, itemsPerPage]);
-
+    if (featuredExhibitions.length === 0) return;
+    setExhibitionIndex((prevIndex) =>
+      prevIndex >= featuredExhibitions.length - itemsPerPage ? 0 : prevIndex + 1
+    );
+  }, [featuredExhibitions.length, itemsPerPage]);
+  
   useEffect(() => {
-    const id = setInterval(handleExhibitionNext, 5000);
-    return () => clearInterval(id);
+    const timer = setInterval(handleExhibitionNext, 5000);
+    return () => clearInterval(timer);
   }, [handleExhibitionNext]);
 
   useEffect(() => {
-    if (!heroContents.length) return;
-    const id = setInterval(() => {
-      setHeroIndex(prev => (prev + 1) % heroContents.length);
-    }, 30000);
-    return () => clearInterval(id);
-  }, [heroContents.length]);
+    if (!heroContents || heroContents.length === 0) return;
+    const heroTimer = setInterval(() => {
+      setHeroIndex((prevIndex) => (prevIndex + 1) % heroContents.length);
+    }, 30000); // 롤링 간격을 30초로 변경
+    return () => clearInterval(heroTimer);
+  }, [heroContents]);
 
+  // 디버그 useEffect는 조건부 return 위로 이동해 훅 순서 고정
   useEffect(() => {
-    setExhibitionIndex(prev => Math.min(prev, Math.max(0, featuredExhibitions.length - 1)));
-  }, [featuredExhibitions.length]);
+    if (heroContents?.[0]) {
+      const h = heroContents[0] as any;
+      console.debug('[HERO IMG]', { raw: h.imageUrl, normalized: normalizeSrc(h.imageUrl || h.image || h.coverImage) });
+    }
+    if (featuredExhibitions?.[0]) {
+      const e = featuredExhibitions[0] as any;
+      console.debug('[EXHIBITION IMG]', {
+        raw: { thumbnailImage: e.thumbnailImage, imageUrl: e.imageUrl, poster: e.poster, thumbnail: e.thumbnail, image: e.image },
+        normalized: normalizeSrc(e.thumbnailImage || e.imageUrl || e.poster || e.thumbnail || e.image),
+      });
+    }
+    if (featuredArtists?.[0]) {
+      const a = featuredArtists[0] as any;
+      console.debug('[ARTIST IMG]', {
+        raw: { profileImage: a.profileImage, imageUrl: a.imageUrl, thumbnail: a.thumbnail, image: a.image, avatar: a.avatar },
+        normalized: normalizeSrc(a.profileImage || a.imageUrl || a.thumbnail || a.image || a.avatar),
+      });
+    }
+  }, [heroContents, featuredExhibitions, featuredArtists]);
 
-  // Guard return은 모든 훅 선언 이후에 위치
   if (loading) return <LoadingSpinner />;
-  if (error)   return <ErrorMessage message={error} />;
+  if (error) return <ErrorMessage message={error} />;
 
-  // 4. 렌더링에 필요한 나머지 변수들을 계산합니다.
   const visibleExhibitions = featuredExhibitions.slice(exhibitionIndex, exhibitionIndex + itemsPerPage);
   if (visibleExhibitions.length < itemsPerPage && featuredExhibitions.length > itemsPerPage) {
     visibleExhibitions.push(...featuredExhibitions.slice(0, itemsPerPage - visibleExhibitions.length));
   }
 
-  const announcements = [
-    { id: 'anno-1', title: 'AI 큐레이터 교육 4기 모집 안내', date: '2024-09-01', content: 'AI 큐레이터 양성 과정 4기 수강생을 모집합니다. 많은 관심 바랍니다.' },
-    { id: 'anno-2', title: '서버 점검 안내 (9/15 02:00-04:00)', date: '2024-08-30', content: '보다 나은 서비스 제공을 위해 서버 점검을 실시합니다.' },
-  ];
-
-  // 5. 모든 변수가 준비되었으므로, return 구문에서 안전하게 사용합니다.
   return (
     <div className="space-y-24">
       {/* Section 1: Hero Section */}
       <section className="relative h-[60vh] rounded-lg overflow-hidden">
-        {heroContents.length > 0 && heroContents.map((hero, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === heroIndex ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
-            <img src={hero.imageUrl} alt={hero.title} className="absolute inset-0 w-full h-full object-cover"/>
-            <div className="relative z-20 p-4 h-full flex flex-col items-center justify-center text-center">
-              <h1 className="text-5xl md:text-7xl font-serif font-bold text-white drop-shadow-lg">{hero.title}</h1>
-              <p className="mt-4 text-lg md:text-xl text-brand-light max-w-2xl mx-auto drop-shadow-md">
-                {hero.subtitle}
-              </p>
-              <div className="mt-8 flex justify-center gap-4">
-                {hero.button1_text && hero.button1_link && <Link to={hero.button1_link}><Button variant="primary">{hero.button1_text}</Button></Link>}
-                {hero.button2_text && hero.button2_link && <Link to={hero.button2_link}><Button variant="secondary">{hero.button2_text}</Button></Link>}
+        {heroContents.length > 0 && heroContents.map((hero, index) => {
+          const heroImg = normalizeSrc(hero.imageUrl || (hero as any).image || (hero as any).coverImage);
+          return (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === heroIndex ? 'opacity-100' : 'opacity-0'}`}
+            >
+              <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+              {heroImg && (
+                <img
+                  src={heroImg}
+                  alt={hero.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              )}
+              <div className="relative z-20 p-4 h-full flex flex-col items-center justify-center text-center">
+                <h1 className="text-5xl md:text-7xl font-serif font-bold text-white drop-shadow-lg">{hero.title}</h1>
+                <p className="mt-4 text-lg md:text-xl text-brand-light max-w-2xl mx-auto drop-shadow-md">
+                  {hero.subtitle}
+                </p>
+                <div className="mt-8 flex justify-center gap-4">
+                  {hero.button1_text && hero.button1_link && <Link to={hero.button1_link}><Button variant="primary">{hero.button1_text}</Button></Link>}
+                  {hero.button2_text && hero.button2_link && <Link to={hero.button2_link}><Button variant="secondary">{hero.button2_text}</Button></Link>}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
             {heroContents.map((_, index) => (
                 <button
@@ -141,88 +171,55 @@ const HomePage: React.FC = () => {
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visibleExhibitions.map((ex) => (
-            <Link to={`/exhibitions/${ex.id}`} key={ex.id}>
-              <ExhibitionCard
-                imageUrl={ex.thumbnailImage}
-                title={ex.title}
-                subtitle={`${ex.startDate} - ${ex.endDate}`}
-              />
-            </Link>
-          ))}
+          {visibleExhibitions.map((ex) => {
+            const exImg = normalizeSrc(
+              (ex as any).thumbnailImage || (ex as any).imageUrl || (ex as any).poster || (ex as any).thumbnail || (ex as any).image
+            );
+            return (
+              <Link to={`/exhibitions/${ex.id}`} key={ex.id}>
+                <ExhibitionCard
+                  imageUrl={exImg}
+                  title={ex.title}
+                  subtitle={`${ex.startDate} - ${ex.endDate}`}
+                />
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      {/* Section 3: Artist Spotlight & News */}
+      {/* Section 3: Artist Spotlight */}
       <section>
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-16">
-          {/* Left Side: Artist Spotlight */}
-          <div className="md:w-3/5">
-            <h2 className="text-4xl font-serif font-bold text-center mb-10">주목할 만한 작가</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
-              {featuredArtists.slice(0, 6).map((artist) => (
-                <Link to={`/artists/${artist.id}`} key={artist.id} className="flex items-center gap-4 group">
-                    <img 
-                        src={artist.profileImage} 
-                        alt={artist.name} 
-                        className="w-32 h-32 flex-shrink-0 rounded-full object-cover border-4 border-brand-gray group-hover:border-brand-gold transition-all duration-300 transform group-hover:scale-105 shadow-lg" 
-                    />
-                    <div>
-                        <h3 className="text-xl font-serif font-semibold text-brand-light group-hover:text-brand-gold transition-colors duration-300">{artist.name}</h3>
-                        <p className="mt-1 text-sm text-gray-400 line-clamp-3">
-                            {artist.bio}
-                        </p>
-                    </div>
-                </Link>
-              ))}
-            </div>
-            <div className="text-center mt-12">
-              <Link to="/artists">
-                <Button variant="secondary">모든 작가 보기</Button>
+        <h2 className="text-4xl font-serif font-bold text-center mb-10">주목할 만한 작가</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {featuredArtists.slice(0, 8).map((artist) => {
+            const artistImg = normalizeSrc(
+              (artist as any).profileImage || (artist as any).imageUrl || (artist as any).thumbnail || (artist as any).image || (artist as any).avatar
+            );
+            return (
+              <Link to={`/artists/${artist.id}`} key={artist.id} className="block text-center group">
+                {artistImg ? (
+                  <img
+                    src={artistImg}
+                    alt={artist.name}
+                    className="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto object-cover border-4 border-brand-gray group-hover:border-brand-gold transition-colors duration-300"
+                  />
+                ) : (
+                  <div
+                    className="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto border-4 border-brand-gray bg-black/30"
+                    aria-label="no image"
+                  />
+                )}
+                <h3 className="mt-4 text-xl font-serif font-semibold">{artist.name}</h3>
+                <p className="text-gray-400 text-sm line-clamp-2 px-2">{artist.bio}</p>
               </Link>
-            </div>
-          </div>
-
-          {/* Right Side: News & Announcements */}
-          <div className="md:w-2/5 flex flex-col gap-12">
-            {/* Art News */}
-            <div>
-              <div className="flex justify-between items-center mb-6 border-b border-brand-gray pb-4">
-                <h2 className="text-3xl font-serif font-bold">아트뉴스</h2>
-                <Link to="/art-news" className="text-sm text-brand-gold hover:underline transition-colors">더보기 &rarr;</Link>
-              </div>
-              <div className="space-y-4">
-                {artNews.slice(0, 2).map(news => (
-                  <Link to="/art-news" key={news.id} className="block p-4 bg-brand-gray rounded-lg hover:bg-opacity-80 transition-colors duration-300">
-                    <div className="flex justify-between items-start">
-                      <h3 className="font-serif text-lg text-brand-light pr-4">{news.title}</h3>
-                      <span className="text-xs text-gray-400 flex-shrink-0 whitespace-nowrap">{news.date}</span>
-                    </div>
-                    <p className="text-sm text-gray-400 mt-1 line-clamp-1">{news.content}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Announcements */}
-            <div>
-              <div className="flex justify-between items-center mb-6 border-b border-brand-gray pb-4">
-                <h2 className="text-3xl font-serif font-bold">공지사항</h2>
-                <Link to="#" className="text-sm text-brand-gold hover:underline transition-colors">더보기 &rarr;</Link>
-              </div>
-              <div className="space-y-4">
-                {announcements.map(item => (
-                   <div key={item.id} className="p-4 bg-brand-gray rounded-lg hover:bg-opacity-80 transition-colors duration-300 cursor-pointer">
-                    <div className="flex justify-between items-start">
-                       <h3 className="font-serif text-lg text-brand-light">{item.title}</h3>
-                       <span className="text-xs text-gray-400 flex-shrink-0 whitespace-nowrap">{item.date}</span>
-                     </div>
-                     <p className="text-sm text-gray-400 mt-1 line-clamp-1">{item.content}</p>
-                 </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            );
+          })}
+        </div>
+        <div className="text-center mt-12">
+            <Link to="/artists">
+                <Button variant="secondary">모든 작가 보기</Button>
+            </Link>
         </div>
       </section>
 
@@ -242,8 +239,8 @@ const HomePage: React.FC = () => {
             ))}
         </div>
         <div className="flex justify-center items-center gap-4">
-          <Link to="/ai-curator"><Button>AI 큐레이터 사용해보기</Button></Link>
-          <Link to="/curation"><Button variant="secondary">모든 큐레이션 보기</Button></Link>
+            <Link to="/ai-curator"><Button>AI 큐레이터 사용해보기</Button></Link>
+            <Link to="/curation"><Button variant="secondary">모든 큐레이션 보기</Button></Link>
         </div>
       </section>
       

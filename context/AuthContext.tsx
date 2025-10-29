@@ -1,54 +1,54 @@
 import * as React from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '../services/supabaseClient';
+import type { User } from '@supabase/supabase-js';
+import { supabase, hasSupabaseEnv } from '../services/supabaseClient';
 
-const { createContext, useContext, useState, useEffect } = React;
-
-interface AuthContextType {
+type AuthCtx = {
   user: User | null;
   loading: boolean;
   login: () => Promise<void>;
   logout: () => Promise<void>;
-}
+};
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const hasSupabaseEnv = !!supabase;
+const Ctx = React.createContext<AuthCtx | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [user, setUser] = React.useState<User | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    const run = async () => {
+  React.useEffect(() => {
+    let unsub: (() => void) | undefined;
+    (async () => {
+      if (!hasSupabaseEnv || !supabase) { setLoading(false); return; }
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
       setLoading(false);
-    };
-    run();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription?.unsubscribe();
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
+        setUser(s?.user ?? null);
+      });
+      unsub = () => subscription.unsubscribe();
+    })();
+    return () => unsub?.();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{
-      user,
-      loading,
-      login: () => supabase.auth.signInWithOAuth({ provider: 'google' }),
-      logout: () => supabase.auth.signOut(),
-    }}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  const value: AuthCtx = {
+    user,
+    loading,
+    login: async () => {
+      if (!supabase) return;
+      await supabase.auth.signInWithOAuth({ provider: 'google' });
+    },
+    logout: async () => {
+      if (!supabase) return;
+      await supabase.auth.signOut();
+    },
+  };
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 };
 
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within an AuthProvider');
-  return ctx;
-};
+export function useAuth() {
+  const v = React.useContext(Ctx);
+  if (!v) throw new Error('useAuth must be used within an AuthProvider');
+  return v;
+}
 

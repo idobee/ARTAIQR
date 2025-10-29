@@ -31,10 +31,15 @@ const ARR = [
   'featured-artist-ids.json','featured-exhibition-ids.json'
 ];
 
+async function writeIfMissing(file: string, content: string) {
+  try { await fs.access(file); console.log(`skip (exists): ${path.basename(file)}`); }
+  catch { await fs.writeFile(file, content, 'utf-8'); console.log(`create: ${path.basename(file)}`); }
+}
+
 async function main() {
   await fs.mkdir(OUT, { recursive: true });
-  await Promise.all(ARR.map(f => fs.writeFile(path.join(OUT, f), '[]', 'utf-8')));
-  await fs.writeFile(path.join(OUT, 'educationCurriculum.json'), '{}', 'utf-8');
-  console.log('✅ placeholders -> public/data');
+  await Promise.all(ARR.map(f => writeIfMissing(path.join(OUT, f), '[]')));
+  await writeIfMissing(path.join(OUT, 'educationCurriculum.json'), '{}');
+  console.log('✅ placeholders (no overwrite) -> public/data');
 }
 main().catch(e => (console.error(e), process.exit(1)));
