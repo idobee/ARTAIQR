@@ -19,27 +19,219 @@
  */
 import fs from 'fs/promises';
 import path from 'path';
+import fetch from 'node-fetch';
+// Fix: Import `fileURLToPath` to resolve `__dirname` in ES modules, and import `process` to fix type error.
 import { fileURLToPath } from 'url';
+// Fix: Changed to a default import for 'process' as required by the module's export structure and to resolve the esModuleInterop-related error.
+import process from 'node:process';
 
+// --- 설정 (사용자가 수정해야 할 부분) ---
+const SHEET_ID = '1-Q4dORHD1CFqYvTFK891lVm2T3IcfiO0PhNgCYcgf-M'; // Google Sheet 문서의 ID
+
+// 각 시트의 GID와 출력 파일명을 정의합니다.
+// GID는 Google Sheet URL에서 확인할 수 있습니다. (예: .../edit#gid=123456789)
+const SHEET_CONFIGS = {
+  artists:              { gid: '537939978',              outputFile: 'artists.json' },
+  artworks:             { gid: '1407700198',             outputFile: 'artworks.json' },
+  curators:             { gid: '695148169',             outputFile: 'curators.json' },
+  curations:            { gid: '1053784494',            outputFile: 'curations.json' },
+  educationHistory:     { gid: '487311061',    outputFile: 'educationHistory.json' },
+  heroContents:         { gid: '1304975179',        outputFile: 'heroContents.json' },
+  artNews:              { gid: '2041682140',                    outputFile: 'art-news.json' },
+  featuredArtistIds:    { gid: '1008375315',     outputFile: 'featured-artist-ids.json' },
+  exhibitions:          { gid: '0',                             outputFile: 'exhibitions.json' },
+  featuredExhibitionIds:{ gid: '446645403',                     outputFile: 'featured-exhibition-ids.json' },
+  artistInExhibition:   { gid: '486094120',                     outputFile: 'artistInExhibition.json' }, // 관계 설정용, 파일로 저장 안 함
+  artworkInExhibition:  { gid: '596902498',                     outputFile: 'artworkInExhibition.json' }, // 관계 설정용, 파일로 저장 안 함
+};
+
+// Fix: Define `__dirname` for an ES modules environment.
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const OUT = path.join(__dirname, '../public/data');
+// 기존 '../data' → 앱이 바로 읽을 수 있도록 '../public/data'로 변경
+const DATA_DIR = path.join(__dirname, '../public/data');
 
-const ARR = [
-  'artists.json','artworks.json','curators.json','curations.json','exhibitions.json',
-  'heroContents.json','art-news.json','educationHistory.json',
-  'featured-artist-ids.json','featured-exhibition-ids.json'
-];
+// --- 데이터 파싱 및 변환 함수 ---
 
-async function writeIfMissing(file: string, content: string) {
-  try { await fs.access(file); console.log(`skip (exists): ${path.basename(file)}`); }
-  catch { await fs.writeFile(file, content, 'utf-8'); console.log(`create: ${path.basename(file)}`); }
-}
+const fetchSheet = async (gid: string) => {
+  console.log(`  - GID: ${gid} 시트를 가져오는 중...`);
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${gid}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`시트(GID: ${gid})를 가져오는데 실패했습니다. 상태: ${response.status}`);
+  }
+  return response.text();
+};
+
+const parseCsv = (csvText: string): Record<string, string>[] => {
+  const lines = csvText.trim().replace(/\r/g, '').split('\n');
+  if (lines.length < 2) return [];
+  const header = lines.shift()!.split(',').map(h => h.trim().replace(/"/g, ''));
+  return lines.map(line => {
+    const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
+    return header.reduce((obj, col, index) => {
+      obj[col] = values[index] || '';
+      return obj;
+    }, {} as Record<string, string>);
+  });
+};
+
+const parseStringToArray = (str: string) => str ? str.split(',').map(s => s.trim()).filter(Boolean) : [];
+const parseStringToBoolean = (str: string) => str ? str.toUpperCase() === 'TRUE' : false;
+
+// --- 메인 실행 로직 ---
 
 async function main() {
-  await fs.mkdir(OUT, { recursive: true });
-  await Promise.all(ARR.map(f => writeIfMissing(path.join(OUT, f), '[]')));
-  await writeIfMissing(path.join(OUT, 'educationCurriculum.json'), '{}');
-  console.log('✅ placeholders (no overwrite) -> public/data');
+  console.log('🚀 Google Sheet 데이터 동기화를 시작합니다...');
+  
+  try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+
+    // 1. 모든 시트 데이터를 병렬로 가져오기
+    console.log('1. Google Sheet에서 모든 데이터를 가져옵니다...');
+    const rawDataPromises = Object.entries(SHEET_CONFIGS).map(async ([key, config]) => {
+      try {
+        const csv = await fetchSheet(config.gid);
+        return { key, data: parseCsv(csv) };
+      } catch (error) {
+        console.error(`'${key}' 데이터를 가져오는 중 오류 발생:`, error);
+        return { key, data: [] }; // 오류 발생 시 빈 데이터 반환
+      }
+    });
+    const allRawData = await Promise.all(rawDataPromises);
+    const rawDataMap = new Map(allRawData.map(d => [d.key, d.data]));
+
+    // 2. 데이터 가공 및 관계 설정
+    console.log('2. 데이터를 가공하고 관계를 설정합니다...');
+    
+    // 전시-작가 관계맵 생성
+    const exhibitionArtistsMap = new Map<string, string[]>();
+    const artistInExhibitionData = rawDataMap.get('artistInExhibition') || [];
+    const exhibitionIdMap = new Map((rawDataMap.get('exhibitions') || []).map(e => [e['전시회'], e['전시회아이디']]));
+
+    artistInExhibitionData.forEach(row => {
+      const exId = exhibitionIdMap.get(row['전시회']);
+      if (exId && row['전시작가명아이디']) {
+        if (!exhibitionArtistsMap.has(exId)) exhibitionArtistsMap.set(exId, []);
+        exhibitionArtistsMap.get(exId)!.push(row['전시작가명아이디']);
+      }
+    });
+
+    // 작품-전시 관계맵 생성
+    const artworkExhibitionMap = new Map<string, string[]>();
+    const artworkInExhibitionData = rawDataMap.get('artworkInExhibition') || [];
+    artworkInExhibitionData.forEach(row => {
+        const exId = exhibitionIdMap.get(row['전시회']);
+        if (exId && row['전시작품아이디']) {
+            if (!artworkExhibitionMap.has(row['전시작품아이디'])) artworkExhibitionMap.set(row['전시작품아이디'], []);
+            artworkExhibitionMap.get(row['전시작품아이디'])!.push(exId);
+        }
+    });
+
+    const finalJsonData: { [key: string]: any[] } = {};
+
+    // 각 데이터 유형별 최종 JSON 생성
+    finalJsonData.artists = (rawDataMap.get('artists') || []).map(r => ({
+      id: r['id'],
+      name: r['name'],
+      bio: r['bio'],
+      profileImage: r['profileImage'],
+    }));
+
+    finalJsonData.artworks = (rawDataMap.get('artworks') || []).map(r => ({
+      id: r['id'],
+      title: r['title'],
+      artistId: r['artistId'],
+      artistName: r['artistName'],
+      year: parseInt(r['year'], 10) || 0,
+      medium: r['medium'],
+      imageUrl: r['imageUrl'],
+      description: r['description'],
+      exhibitionIds: artworkExhibitionMap.get(r['id']) || [],
+    }));
+
+    finalJsonData.exhibitions = (rawDataMap.get('exhibitions') || []).map(r => {
+      const [startDate, endDate] = r['전시기간'] ? r['전시기간'].split('~').map(d => d.trim()) : ['미정', '미정'];
+      return {
+        id: r['전시회아이디'],
+        title: r['전시회'],
+        description: r['전시요약'],
+        startDate,
+        endDate,
+        thumbnailImage: r['이미지위치정보'] || `https://picsum.photos/seed/${r['전시회아이디']}/600/400`,
+        artistIds: exhibitionArtistsMap.get(r['전시회아이디']) || [],
+      };
+    });
+    
+    finalJsonData.curators = (rawDataMap.get('curators') || []).map(r => ({
+        id: r['id'],
+        name: r['name'],
+        title: r['title'],
+        bio: r['bio'],
+        profileImage: r['profileImage'],
+    }));
+
+    finalJsonData.curations = (rawDataMap.get('curations') || []).map(r => ({
+        id: r['id'],
+        title: r['title'],
+        authorId: r['authorId'],
+        excerpt: r['excerpt'],
+        artistIds: parseStringToArray(r['artistIds']),
+        artworkIds: parseStringToArray(r['artworkIds']),
+        exhibitionIds: parseStringToArray(r['exhibitionIds']),
+        videoUrl: r['videoUrl'] || undefined,
+        bShowCase: parseStringToBoolean(r['bShowCase']),
+    }));
+    
+    finalJsonData.educationHistory = (rawDataMap.get('educationHistory') || []).map(r => ({
+        year: r['year'],
+        programName: r['programName'],
+        description: r['description'],
+        outcome: r['outcome'],
+        level: r['level'] || undefined,
+    }));
+
+    finalJsonData.heroContents = (rawDataMap.get('heroContents') || []).map(r => ({
+        title: r['title'],
+        subtitle: r['subtitle'],
+        imageUrl: r['imageUrl'],
+        button1_text: r['button1_text'],
+        button1_link: r['button1_link'],
+        button2_text: r['button2_text'],
+        button2_link: r['button2_link'],
+    }));
+    
+    finalJsonData.artNews = (rawDataMap.get('artNews') || []).map(r => ({
+        id: r['id'],
+        category: r['category'],
+        title: r['title'],
+        source: r['source'],
+        date: r['date'],
+        content: r['content'],
+        imageUrl: r['imageUrl'],
+    }));
+
+    finalJsonData.featuredArtistIds = (rawDataMap.get('featuredArtistIds') || []).map(r => r['id']);
+    finalJsonData.featuredExhibitionIds = (rawDataMap.get('featuredExhibitionIds') || []).map(r => r['전시회아이디']);
+
+    // 3. JSON 파일로 저장
+    console.log('3. 가공된 데이터를 JSON 파일로 저장합니다...');
+    for (const [key, data] of Object.entries(finalJsonData)) {
+      const configKey = key.endsWith('Ids') ? key.replace('Ids', '') + 'Ids' : key;
+      const config = SHEET_CONFIGS[configKey as keyof typeof SHEET_CONFIGS];
+      if (config && config.outputFile) {
+        const filePath = path.join(DATA_DIR, config.outputFile);
+        await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+        console.log(`  - ✅ ${config.outputFile} 파일이 성공적으로 저장되었습니다.`);
+      }
+    }
+
+    console.log('\n🎉 모든 데이터 동기화가 성공적으로 완료되었습니다!');
+  } catch (error) {
+    console.error('\n❌ 데이터 동기화 중 심각한 오류가 발생했습니다:', error);
+    // Fix: The explicit import of `process` from `node:process` resolves the TypeScript type error.
+    process.exit(1);
+  }
 }
-main().catch(e => (console.error(e), process.exit(1)));
+
+main();
