@@ -6,9 +6,7 @@
     "startDate": "2024.03.15",
     "endDate": "2024.05.10",
     "thumbnailImage": "https://picsum.photos/seed/ex-1/600/400",
-<<<<<<< HEAD
-    "artistIds": [art-001,art-002,art-003]
-=======
+
     "artistIds": [
       "artist-1",
       "artist-2"
@@ -18,7 +16,7 @@
       "art-002",
       "art-003"
     ]
->>>>>>> f7a9ce3 (fix: wrap with DataProvider and add routes)
+
   },
   {
     "id": "ex-2",
