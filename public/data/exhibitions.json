@@ -6,7 +6,7 @@
     "startDate": "2024.03.15",
     "endDate": "2024.05.10",
     "thumbnailImage": "https://picsum.photos/seed/ex-1/600/400",
-    "artistIds": []
+    "artistIds": [art-001,art-002,art-003]
   },
   {
     "id": "ex-2",
