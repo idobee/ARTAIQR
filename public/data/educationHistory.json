@@ -1,7 +1,32 @@
 [
-  {},
-  {},
-  {},
-  {},
-  {}
+  {
+    "year": "2023",
+    "programName": "제33기 AI 큐레이터 양성 과정",
+    "outcome": "",
+    "level": "레벨1"
+  },
+  {
+    "year": "2022",
+    "programName": "디지털 아트와 NFT 워크숍",
+    "outcome": "",
+    "level": "레벨2"
+  },
+  {
+    "year": "2022",
+    "programName": "제2기 AI 큐레이터 양성 과정",
+    "outcome": "",
+    "level": "레벨1"
+  },
+  {
+    "year": "2021",
+    "programName": "청소년을 위한 미디어 아트 캠프",
+    "outcome": "",
+    "level": "청소년교육"
+  },
+  {
+    "year": "2021",
+    "programName": "제1기 AI 큐레이터 양성 과정",
+    "outcome": "",
+    "level": "입문 과정"
+  }
 ]

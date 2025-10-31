@@ -6,7 +6,19 @@
     "startDate": "2024.03.15",
     "endDate": "2024.05.10",
     "thumbnailImage": "https://picsum.photos/seed/ex-1/600/400",
+<<<<<<< HEAD
     "artistIds": [art-001,art-002,art-003]
+=======
+    "artistIds": [
+      "artist-1",
+      "artist-2"
+    ],
+    "artworkIds": [
+      "art-001",
+      "art-002",
+      "art-003"
+    ]
+>>>>>>> f7a9ce3 (fix: wrap with DataProvider and add routes)
   },
   {
     "id": "ex-2",
@@ -15,7 +27,15 @@
     "startDate": "2024.04.01",
     "endDate": "2024.06.20",
     "thumbnailImage": "https://picsum.photos/seed/ex-2/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-2",
+      "artist-3"
+    ],
+    "artworkIds": [
+      "art-004",
+      "art-005",
+      "art-006"
+    ]
   },
   {
     "id": "ex-3",
@@ -24,7 +44,29 @@
     "startDate": "2024.05.20",
     "endDate": "2024.08.15",
     "thumbnailImage": "https://picsum.photos/seed/ex-3/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-4",
+      "artist-5",
+      "artist-6",
+      "artist-7",
+      "artist-8",
+      "artist-9",
+      "artist-10"
+    ],
+    "artworkIds": [
+      "art-007",
+      "art-008",
+      "art-009",
+      "art-010",
+      "art-011",
+      "art-012",
+      "art-013",
+      "art-014",
+      "art-015",
+      "art-016",
+      "art-017",
+      "art-018"
+    ]
   },
   {
     "id": "ex-4",
@@ -33,7 +75,12 @@
     "startDate": "2024.06.10",
     "endDate": "2024.09.05",
     "thumbnailImage": "https://picsum.photos/seed/ex-4/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-11"
+    ],
+    "artworkIds": [
+      "art-019"
+    ]
   },
   {
     "id": "ex-5",
@@ -42,7 +89,16 @@
     "startDate": "2024.07.01",
     "endDate": "2024.09.30",
     "thumbnailImage": "https://picsum.photos/seed/ex-5/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-12",
+      "artist-13",
+      "artist-14"
+    ],
+    "artworkIds": [
+      "art-020",
+      "art-021",
+      "art-022"
+    ]
   },
   {
     "id": "ex-6",
@@ -51,7 +107,8 @@
     "startDate": "2024.08.05",
     "endDate": "2024.10.20",
     "thumbnailImage": "https://picsum.photos/seed/ex-6/600/400",
-    "artistIds": []
+    "artistIds": [],
+    "artworkIds": []
   },
   {
     "id": "ex-7",
@@ -60,7 +117,8 @@
     "startDate": "2024.09.01",
     "endDate": "2024.11.30",
     "thumbnailImage": "https://picsum.photos/seed/ex-7/600/400",
-    "artistIds": []
+    "artistIds": [],
+    "artworkIds": []
   },
   {
     "id": "ex-8",
@@ -69,7 +127,8 @@
     "startDate": "2024.10.15",
     "endDate": "2025.01.10",
     "thumbnailImage": "https://picsum.photos/seed/ex-8/600/400",
-    "artistIds": []
+    "artistIds": [],
+    "artworkIds": []
   },
   {
     "id": "ex-9",
@@ -78,7 +137,14 @@
     "startDate": "2024.11.20",
     "endDate": "2025.02.15",
     "thumbnailImage": "https://picsum.photos/seed/ex-9/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-15",
+      "artist-16"
+    ],
+    "artworkIds": [
+      "art-023",
+      "art-024"
+    ]
   },
   {
     "id": "ex-10",
@@ -87,7 +153,14 @@
     "startDate": "2024.12.01",
     "endDate": "2025.03.20",
     "thumbnailImage": "https://picsum.photos/seed/ex-10/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-17",
+      "artist-18"
+    ],
+    "artworkIds": [
+      "art-025",
+      "art-026"
+    ]
   },
   {
     "id": "ex-11",
@@ -96,7 +169,16 @@
     "startDate": "2024.03.01",
     "endDate": "2024.04.30",
     "thumbnailImage": "https://picsum.photos/seed/ex-11/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-19",
+      "artist-20",
+      "artist-4"
+    ],
+    "artworkIds": [
+      "art-027",
+      "art-028",
+      "art-029"
+    ]
   },
   {
     "id": "ex-12",
@@ -105,7 +187,8 @@
     "startDate": "2024.04.10",
     "endDate": "2024.06.30",
     "thumbnailImage": "https://picsum.photos/seed/ex-12/600/400",
-    "artistIds": []
+    "artistIds": [],
+    "artworkIds": []
   },
   {
     "id": "ex-13",
@@ -114,7 +197,16 @@
     "startDate": "2024.05.15",
     "endDate": "2024.07.31",
     "thumbnailImage": "https://picsum.photos/seed/ex-13/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-18",
+      "artist-5"
+    ],
+    "artworkIds": [
+      "art-030",
+      "art-010",
+      "art-011",
+      "art-012"
+    ]
   },
   {
     "id": "ex-14",
@@ -123,7 +215,10 @@
     "startDate": "2024.06.25",
     "endDate": "2024.09.15",
     "thumbnailImage": "https://picsum.photos/seed/ex-14/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-6"
+    ],
+    "artworkIds": []
   },
   {
     "id": "ex-15",
@@ -132,7 +227,15 @@
     "startDate": "2024.07.20",
     "endDate": "2024.10.31",
     "thumbnailImage": "https://picsum.photos/seed/ex-15/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-7",
+      "artist-8"
+    ],
+    "artworkIds": [
+      "art-013",
+      "art-014",
+      "art-015"
+    ]
   },
   {
     "id": "ex-16",
@@ -141,7 +244,14 @@
     "startDate": "2024.08.10",
     "endDate": "2024.11.10",
     "thumbnailImage": "https://picsum.photos/seed/ex-16/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-8",
+      "artist-9"
+    ],
+    "artworkIds": [
+      "art-016",
+      "art-017"
+    ]
   },
   {
     "id": "ex-17",
@@ -150,7 +260,16 @@
     "startDate": "2024.09.20",
     "endDate": "2024.12.20",
     "thumbnailImage": "https://picsum.photos/seed/ex-17/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-10",
+      "artist-11",
+      "artist-16"
+    ],
+    "artworkIds": [
+      "art-018",
+      "art-019",
+      "art-024"
+    ]
   },
   {
     "id": "ex-18",
@@ -159,7 +278,14 @@
     "startDate": "2024.10.05",
     "endDate": "2025.01.05",
     "thumbnailImage": "https://picsum.photos/seed/ex-18/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-17",
+      "artist-18"
+    ],
+    "artworkIds": [
+      "art-025",
+      "art-026"
+    ]
   },
   {
     "id": "ex-19",
@@ -168,7 +294,8 @@
     "startDate": "2024.11.15",
     "endDate": "2025.02.28",
     "thumbnailImage": "https://picsum.photos/seed/ex-19/600/400",
-    "artistIds": []
+    "artistIds": [],
+    "artworkIds": []
   },
   {
     "id": "ex-20",
@@ -177,6 +304,18 @@
     "startDate": "2024.12.10",
     "endDate": "2025.03.31",
     "thumbnailImage": "https://picsum.photos/seed/ex-20/600/400",
-    "artistIds": []
+    "artistIds": [
+      "artist-19",
+      "artist-20",
+      "artist-4",
+      "artist-18",
+      "artist-15"
+    ],
+    "artworkIds": [
+      "art-027",
+      "art-028",
+      "art-029",
+      "art-030"
+    ]
   }
 ]

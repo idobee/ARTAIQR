@@ -18,7 +18,7 @@
  * =================================================================================
  */
 import fs from 'fs/promises';
-import path from 'path';
+import path from 'node:path';
 import fetch from 'node-fetch';
 // Fix: Import `fileURLToPath` to resolve `__dirname` in ES modules, and import `process` to fix type error.
 import { fileURLToPath } from 'url';
@@ -41,8 +41,8 @@ const SHEET_CONFIGS = {
   featuredArtistIds:    { gid: '1008375315',     outputFile: 'featured-artist-ids.json' },
   exhibitions:          { gid: '0',                             outputFile: 'exhibitions.json' },
   featuredExhibitionIds:{ gid: '446645403',                     outputFile: 'featured-exhibition-ids.json' },
-  artistInExhibition:   { gid: '486094120',                     outputFile: 'artistInExhibition.json' }, // 관계 설정용, 파일로 저장 안 함
-  artworkInExhibition:  { gid: '596902498',                     outputFile: 'artworkInExhibition.json' }, // 관계 설정용, 파일로 저장 안 함
+  artistInExhibition:   { gid: '486094120',                     outputFile: 'artistInExhibition.json' },
+  artworkInExhibition:  { gid: '596902498',                     outputFile: 'artworkInExhibition.json' },
 };
 
 // Fix: Define `__dirname` for an ES modules environment.
@@ -79,58 +79,148 @@ const parseCsv = (csvText: string): Record<string, string>[] => {
 const parseStringToArray = (str: string) => str ? str.split(',').map(s => s.trim()).filter(Boolean) : [];
 const parseStringToBoolean = (str: string) => str ? str.toUpperCase() === 'TRUE' : false;
 
-// --- 메인 실행 로직 ---
+// 세로형 전용 헬퍼(중복 선언 금지)
+type Row = Record<string, any>;
+const toStr = (v: unknown) => (v == null ? '' : String(v).trim());
+const normalizeKeys = (row: any): Row => {
+  const out: Row = {};
+  for (const [k, v] of Object.entries(row || {})) out[String(k).trim().toLowerCase()] = v;
+  return out;
+};
+const pick = (row: Row, keys: string[]) => {
+  for (const k of keys) {
+    const v = row?.[k];
+    if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim();
+  }
+  return undefined;
+};
+const normalizeExId = (v?: unknown): string | undefined => {
+  const s = toStr(v);
+  if (!s) return undefined;
+  const m1 = s.match(/^ex-0*(\d+)$/i); if (m1) return `ex-${m1[1]}`;
+  if (/^ex-\d+$/i.test(s)) return s.toLowerCase();
+  const m2 = s.match(/^\d+$/); if (m2) return `ex-${m2[0]}`;
+  return undefined;
+};
+const isArtistId = (s: string) => /^artist-\d+$/i.test(s);
+const isArtworkId = (s: string) => /^(art|artwork)-\d+(?:-\d+)*$/i.test(s);
+/** 헤더 오염/대소문자/공백 대응해서 실제 컬럼 키를 찾아냄 */
+const resolveColumnKey = (row: Row, aliases: string[]): string | undefined => {
+  const keys = Object.keys(row || {});
+  const norm = (k: string) => k.replace(/\s+/g, '').toLowerCase();
+  // exact
+  for (const k of keys) if (aliases.includes(norm(k))) return k;
+  // startsWith
+  for (const k of keys) if (aliases.some(a => norm(k).startsWith(a))) return k;
+  // contains
+  for (const k of keys) if (aliases.some(a => norm(k).includes(a))) return k;
+  return undefined;
+};
 
+// 추가: 누락된 헬퍼들(중복 선언 금지)
+// 헬퍼(중복 선언 금지)
+function extractIdFromSeedUrl(url?: string): string | undefined {
+  const s = typeof url === 'string' ? url : '';
+  const m = s.match(/\/seed\/([^/]+)\//i);
+  return m ? m[1].trim() : undefined;
+}
+
+// 모든 시트를 병렬로 받아와 Map<시트키, 행배열> 형태로 반환
+async function fetchData(): Promise<Map<string, Row[]>> {
+  console.log('1. Google Sheet에서 모든 데이터를 가져옵니다...');
+  const map = new Map<string, Row[]>();
+
+  await Promise.all(
+    Object.entries(SHEET_CONFIGS).map(async ([key, cfg]) => {
+      try {
+        const csv = await fetchSheet(cfg.gid);
+        const rows = parseCsv(csv);
+        map.set(key, rows as Row[]);
+      } catch (e) {
+        console.error(`  - ⚠️ ${key} 시트를 가져오는데 실패했습니다.`, e);
+        map.set(key, []);
+      }
+    })
+  );
+
+  return map;
+}
+
+// --- 메인 실행 로직 ---
 async function main() {
   console.log('🚀 Google Sheet 데이터 동기화를 시작합니다...');
-  
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
+    const rawDataMap = await fetchData();
 
-    // 1. 모든 시트 데이터를 병렬로 가져오기
-    console.log('1. Google Sheet에서 모든 데이터를 가져옵니다...');
-    const rawDataPromises = Object.entries(SHEET_CONFIGS).map(async ([key, config]) => {
-      try {
-        const csv = await fetchSheet(config.gid);
-        return { key, data: parseCsv(csv) };
-      } catch (error) {
-        console.error(`'${key}' 데이터를 가져오는 중 오류 발생:`, error);
-        return { key, data: [] }; // 오류 발생 시 빈 데이터 반환
-      }
-    });
-    const allRawData = await Promise.all(rawDataPromises);
-    const rawDataMap = new Map(allRawData.map(d => [d.key, d.data]));
+    // 기본 시트
+    const rawExhibitions: Row[] = rawDataMap.get('exhibitions') || [];
 
-    // 2. 데이터 가공 및 관계 설정
-    console.log('2. 데이터를 가공하고 관계를 설정합니다...');
-    
-    // 전시-작가 관계맵 생성
+    // 관계 시트(세로형)
+    const aieRows = ((rawDataMap.get('artistInExhibition') || []) as any[]).map(normalizeKeys);
+    const aweRows = ((rawDataMap.get('artworkInExhibition') || []) as any[]).map(normalizeKeys);
+
+    console.log(`[map] AIE rows=${aieRows.length}`, aieRows[0] ? `keys: ${Object.keys(aieRows[0]).join(' | ')}` : '(empty)');
+    console.log(`[map] AWE rows=${aweRows.length}`, aweRows[0] ? `keys: ${Object.keys(aweRows[0]).join(' | ')}` : '(empty)');
+
+    // 컬럼 키 자동 판별
+    const aieExKey = aieRows[0] ? resolveColumnKey(aieRows[0], ['exhibitionid','전시회아이디','ex_id','전시아이디','전시회']) : undefined;
+    const aieArtistKey = aieRows[0] ? resolveColumnKey(aieRows[0], ['artistid','전시작가명아이디','작가아이디','ar_id','작가']) : undefined;
+    const aweExKey = aweRows[0] ? resolveColumnKey(aweRows[0], ['exhibitionid','전시회아이디','ex_id','전시아이디','전시회']) : undefined;
+    const aweArtworkKey = aweRows[0] ? resolveColumnKey(aweRows[0], ['artworkid','전시작품아이디','작품아이디','aw_id','작품']) : undefined;
+
+    console.log(`[map] resolved keys -> AIE(exhibitionId:${aieExKey}, artistId:${aieArtistKey}), AWE(exhibitionId:${aweExKey}, artworkId:${aweArtworkKey})`);
+
+    // 전시 → 작가IDs
     const exhibitionArtistsMap = new Map<string, string[]>();
-    const artistInExhibitionData = rawDataMap.get('artistInExhibition') || [];
-    const exhibitionIdMap = new Map((rawDataMap.get('exhibitions') || []).map(e => [e['전시회'], e['전시회아이디']]));
-
-    artistInExhibitionData.forEach(row => {
-      const exId = exhibitionIdMap.get(row['전시회']);
-      if (exId && row['전시작가명아이디']) {
+    let aieOk = 0, aieMiss = 0;
+    if (aieRows.length && aieExKey && aieArtistKey) {
+      for (const r of aieRows) {
+        const exId = normalizeExId(r[aieExKey]);
+        const artistId = toStr(r[aieArtistKey]);
+        if (!exId || !artistId || !isArtistId(artistId)) { aieMiss++; continue; }
         if (!exhibitionArtistsMap.has(exId)) exhibitionArtistsMap.set(exId, []);
-        exhibitionArtistsMap.get(exId)!.push(row['전시작가명아이디']);
+        exhibitionArtistsMap.get(exId)!.push(artistId);
+        aieOk++;
       }
-    });
+      for (const [k, v] of exhibitionArtistsMap) exhibitionArtistsMap.set(k, Array.from(new Set(v)));
+    }
+    console.log(`[map] AIE ok=${aieOk}, miss=${aieMiss}, ex-1 artists=${(exhibitionArtistsMap.get('ex-1')||[]).length}`);
 
-    // 작품-전시 관계맵 생성
-    const artworkExhibitionMap = new Map<string, string[]>();
-    const artworkInExhibitionData = rawDataMap.get('artworkInExhibition') || [];
-    artworkInExhibitionData.forEach(row => {
-        const exId = exhibitionIdMap.get(row['전시회']);
-        if (exId && row['전시작품아이디']) {
-            if (!artworkExhibitionMap.has(row['전시작품아이디'])) artworkExhibitionMap.set(row['전시작품아이디'], []);
-            artworkExhibitionMap.get(row['전시작품아이디'])!.push(exId);
-        }
-    });
+    // 전시 ↔ 작품IDs
+    const exhibitionArtworksMap = new Map<string, string[]>();  // exId -> [artworkId]
+    const artworkExhibitionMap = new Map<string, string[]>();   // artworkId -> [exId]
+    let aweOk = 0, aweMiss = 0;
+    if (aweRows.length && aweExKey && aweArtworkKey) {
+      for (const r of aweRows) {
+        const exId = normalizeExId(r[aweExKey]);
+        const awId = toStr(r[aweArtworkKey]);
+        if (!exId || !awId /* || !isArtworkId(awId) */) { aweMiss++; continue; } // 최소 검증
+        if (!exhibitionArtworksMap.has(exId)) exhibitionArtworksMap.set(exId, []);
+        exhibitionArtworksMap.get(exId)!.push(awId);
+        if (!artworkExhibitionMap.has(awId)) artworkExhibitionMap.set(awId, []);
+        artworkExhibitionMap.get(awId)!.push(exId);
+        aweOk++;
+      }
+      for (const [k, v] of exhibitionArtworksMap) exhibitionArtworksMap.set(k, Array.from(new Set(v)));
+      for (const [k, v] of artworkExhibitionMap) artworkExhibitionMap.set(k, Array.from(new Set(v)));
+    }
+    console.log(`[map] AWE ok=${aweOk}, miss=${aweMiss}`);
+    console.log(`[map] ex-1 artworks=${(exhibitionArtworksMap.get('ex-1')||[]).length}, sample: ${(exhibitionArtworksMap.get('ex-1')||[]).slice(0,5).join(', ')}`);
 
+    // 확인용 관계 파일 저장
+    await fs.writeFile(
+      path.join(DATA_DIR, 'artistInExhibition.json'),
+      JSON.stringify(Array.from(exhibitionArtistsMap.entries()).map(([exhibitionId, artistIds]) => ({ exhibitionId, artistIds })), null, 2)
+    );
+    await fs.writeFile(
+      path.join(DATA_DIR, 'artworkInExhibition.json'),
+      JSON.stringify(Array.from(artworkExhibitionMap.entries()).map(([artworkId, exhibitionIds]) => ({ artworkId, exhibitionIds })), null, 2)
+    );
+
+    // 최종 JSON 생성(주입)
     const finalJsonData: { [key: string]: any[] } = {};
 
-    // 각 데이터 유형별 최종 JSON 생성
     finalJsonData.artists = (rawDataMap.get('artists') || []).map(r => ({
       id: r['id'],
       name: r['name'],
@@ -138,83 +228,90 @@ async function main() {
       profileImage: r['profileImage'],
     }));
 
-    finalJsonData.artworks = (rawDataMap.get('artworks') || []).map(r => ({
-      id: r['id'],
-      title: r['title'],
-      artistId: r['artistId'],
-      artistName: r['artistName'],
-      year: parseInt(r['year'], 10) || 0,
-      medium: r['medium'],
-      imageUrl: r['imageUrl'],
-      description: r['description'],
-      exhibitionIds: artworkExhibitionMap.get(r['id']) || [],
-    }));
-
-    finalJsonData.exhibitions = (rawDataMap.get('exhibitions') || []).map(r => {
-      const [startDate, endDate] = r['전시기간'] ? r['전시기간'].split('~').map(d => d.trim()) : ['미정', '미정'];
+    finalJsonData.artworks = (rawDataMap.get('artworks') || []).map((r: Row) => {
+      const id = pick(normalizeKeys(r), ['id','작품아이디','artworkid']);
       return {
-        id: r['전시회아이디'],
-        title: r['전시회'],
-        description: r['전시요약'],
-        startDate,
-        endDate,
-        thumbnailImage: r['이미지위치정보'] || `https://picsum.photos/seed/${r['전시회아이디']}/600/400`,
-        artistIds: exhibitionArtistsMap.get(r['전시회아이디']) || [],
+        id,
+        title: r['title'] ?? r['작품명'],
+        artistId: r['artistId'] ?? r['작가아이디'],
+        artistName: r['artistName'],
+        year: Number(r['year'] ?? r['년도']) || 0,
+        medium: r['medium'] ?? r['재료'],
+        imageUrl: r['imageUrl'] ?? r['이미지'],
+        description: r['description'] ?? r['설명'],
+        exhibitionIds: id ? (artworkExhibitionMap.get(id) || []) : [],
       };
     });
-    
+
+    finalJsonData.exhibitions = rawExhibitions.map((r: Row) => {
+      const rr = normalizeKeys(r);
+      const id = normalizeExId(pick(rr, ['전시회아이디','exhibitionid','id'])) || '';
+      const period = toStr(pick(rr, ['전시기간','period']) || '');
+      const [startDate, endDate] = period ? period.split('~').map(d => d.trim()) : ['미정', '미정'];
+      return {
+        id,
+        title: r['전시회'] ?? r['title'],
+        description: r['전시요약'] ?? r['description'],
+        startDate,
+        endDate,
+        thumbnailImage: (r['이미지위치정보'] ?? r['thumbnailImage']) || `https://picsum.photos/seed/${id}/600/400`,
+        artistIds: id ? (exhibitionArtistsMap.get(id) || []) : [],
+        artworkIds: id ? (exhibitionArtworksMap.get(id) || []) : [],
+      };
+    });
+
     finalJsonData.curators = (rawDataMap.get('curators') || []).map(r => ({
-        id: r['id'],
-        name: r['name'],
-        title: r['title'],
-        bio: r['bio'],
-        profileImage: r['profileImage'],
+      id: r['id'],
+      name: r['name'],
+      title: r['title'],
+      bio: r['bio'],
+      profileImage: r['profileImage'],
     }));
 
     finalJsonData.curations = (rawDataMap.get('curations') || []).map(r => ({
-        id: r['id'],
-        title: r['title'],
-        authorId: r['authorId'],
-        excerpt: r['excerpt'],
-        artistIds: parseStringToArray(r['artistIds']),
-        artworkIds: parseStringToArray(r['artworkIds']),
-        exhibitionIds: parseStringToArray(r['exhibitionIds']),
-        videoUrl: r['videoUrl'] || undefined,
-        bShowCase: parseStringToBoolean(r['bShowCase']),
+      id: r['id'],
+      title: r['title'],
+      authorId: r['authorId'],
+      excerpt: r['excerpt'],
+      artistIds: (r['artistIds'] || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+      artworkIds: (r['artworkIds'] || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+      exhibitionIds: (r['exhibitionIds'] || '').split(',').map((s: string) => s.trim()).filter(Boolean),
+      videoUrl: r['videoUrl'] || undefined,
+      bShowCase: (r['bShowCase'] || '').toUpperCase() === 'TRUE',
     }));
-    
+
     finalJsonData.educationHistory = (rawDataMap.get('educationHistory') || []).map(r => ({
-        year: r['year'],
-        programName: r['programName'],
-        description: r['description'],
-        outcome: r['outcome'],
-        level: r['level'] || undefined,
+      year: r['year'],
+      programName: r['programName'],
+      description: r['description'],
+      outcome: r['outcome'],
+      level: r['level'] || undefined,
     }));
 
     finalJsonData.heroContents = (rawDataMap.get('heroContents') || []).map(r => ({
-        title: r['title'],
-        subtitle: r['subtitle'],
-        imageUrl: r['imageUrl'],
-        button1_text: r['button1_text'],
-        button1_link: r['button1_link'],
-        button2_text: r['button2_text'],
-        button2_link: r['button2_link'],
+      title: r['title'],
+      subtitle: r['subtitle'],
+      imageUrl: r['imageUrl'],
+      button1_text: r['button1_text'],
+      button1_link: r['button1_link'],
+      button2_text: r['button2_text'],
+      button2_link: r['button2_link'],
     }));
-    
+
     finalJsonData.artNews = (rawDataMap.get('artNews') || []).map(r => ({
-        id: r['id'],
-        category: r['category'],
-        title: r['title'],
-        source: r['source'],
-        date: r['date'],
-        content: r['content'],
-        imageUrl: r['imageUrl'],
+      id: r['id'],
+      category: r['category'],
+      title: r['title'],
+      source: r['source'],
+      date: r['date'],
+      content: r['content'],
+      imageUrl: r['imageUrl'],
     }));
 
-    finalJsonData.featuredArtistIds = (rawDataMap.get('featuredArtistIds') || []).map(r => r['id']);
-    finalJsonData.featuredExhibitionIds = (rawDataMap.get('featuredExhibitionIds') || []).map(r => r['전시회아이디']);
+    finalJsonData.featuredArtistIds = (rawDataMap.get('featuredArtistIds') || []).map((r: Row) => r['id']);
+    finalJsonData.featuredExhibitionIds = (rawDataMap.get('featuredExhibitionIds') || []).map((r: Row) => r['exhibitionId']);
 
-    // 3. JSON 파일로 저장
+    // 5) 파일 저장
     console.log('3. 가공된 데이터를 JSON 파일로 저장합니다...');
     for (const [key, data] of Object.entries(finalJsonData)) {
       const configKey = key.endsWith('Ids') ? key.replace('Ids', '') + 'Ids' : key;
@@ -229,9 +326,11 @@ async function main() {
     console.log('\n🎉 모든 데이터 동기화가 성공적으로 완료되었습니다!');
   } catch (error) {
     console.error('\n❌ 데이터 동기화 중 심각한 오류가 발생했습니다:', error);
-    // Fix: The explicit import of `process` from `node:process` resolves the TypeScript type error.
     process.exit(1);
   }
 }
 
-main();
+main().catch((e) => {
+  console.error('\n❌ 데이터 동기화 중 심각한 오류가 발생했습니다:', e);
+  process.exit(1);
+});

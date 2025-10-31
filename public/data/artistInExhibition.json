@@ -1,0 +1,116 @@
+[
+  {
+    "exhibitionId": "ex-1",
+    "artistIds": [
+      "artist-1",
+      "artist-2"
+    ]
+  },
+  {
+    "exhibitionId": "ex-2",
+    "artistIds": [
+      "artist-2",
+      "artist-3"
+    ]
+  },
+  {
+    "exhibitionId": "ex-3",
+    "artistIds": [
+      "artist-4",
+      "artist-5",
+      "artist-6",
+      "artist-7",
+      "artist-8",
+      "artist-9",
+      "artist-10"
+    ]
+  },
+  {
+    "exhibitionId": "ex-4",
+    "artistIds": [
+      "artist-11"
+    ]
+  },
+  {
+    "exhibitionId": "ex-5",
+    "artistIds": [
+      "artist-12",
+      "artist-13",
+      "artist-14"
+    ]
+  },
+  {
+    "exhibitionId": "ex-9",
+    "artistIds": [
+      "artist-15",
+      "artist-16"
+    ]
+  },
+  {
+    "exhibitionId": "ex-10",
+    "artistIds": [
+      "artist-17",
+      "artist-18"
+    ]
+  },
+  {
+    "exhibitionId": "ex-11",
+    "artistIds": [
+      "artist-19",
+      "artist-20",
+      "artist-4"
+    ]
+  },
+  {
+    "exhibitionId": "ex-13",
+    "artistIds": [
+      "artist-18",
+      "artist-5"
+    ]
+  },
+  {
+    "exhibitionId": "ex-14",
+    "artistIds": [
+      "artist-6"
+    ]
+  },
+  {
+    "exhibitionId": "ex-15",
+    "artistIds": [
+      "artist-7",
+      "artist-8"
+    ]
+  },
+  {
+    "exhibitionId": "ex-16",
+    "artistIds": [
+      "artist-8",
+      "artist-9"
+    ]
+  },
+  {
+    "exhibitionId": "ex-17",
+    "artistIds": [
+      "artist-10",
+      "artist-11",
+      "artist-16"
+    ]
+  },
+  {
+    "exhibitionId": "ex-18",
+    "artistIds": [
+      "artist-17",
+      "artist-18"
+    ]
+  },
+  {
+    "exhibitionId": "ex-20",
+    "artistIds": [
+      "artist-19",
+      "artist-20",
+      "artist-4",
+      "artist-18",
+      "artist-15"
+    ]
+  }
+]

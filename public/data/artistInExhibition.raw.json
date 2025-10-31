@@ -1,0 +1,82 @@
+[
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "13",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-18"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "13",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-5"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "14",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-6"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "14",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-6"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-15",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-7"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-15",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-7"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-15",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-8"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-16",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-8"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-16",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-9"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-17",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-10"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-17",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-11"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-17",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-16"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-18",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-17"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-18",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-18"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-19"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-20"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-4"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-18"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-15"
+  },
+  {
+    "exhibitionId ex-1 ex-1 ex-1 ex-2 ex-2 ex-2 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-3 ex-4 ex-5 ex-5 ex-5 ex-9 ex-9 ex-10 ex-10 ex-11 ex-11 ex-11": "ex-20",
+    "artistId artist-1 artist-1 artist-2 artist-2 artist-3 artist-3 artist-4 artist-4 artist-5 artist-5 artist-6 artist-6 artist-7 artist-7 artist-8 artist-8 artist-9 artist-10 artist-11 artist-12 artist-13 artist-14 artist-15 artist-16 artist-17 artist-18 artist-19 artist-20 artist-4": "artist-18"
+  }
+]

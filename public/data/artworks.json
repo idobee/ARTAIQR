@@ -8,7 +8,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-001/800/600",
     "description": "수많은 점들이 모여 우주를 이루는 김환기 화백의 대표작.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-1"
+    ]
   },
   {
     "id": "art-002",
@@ -19,7 +21,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-002/800/600",
     "description": "푸른 점화의 절정을 보여주는 작품으로, 무한한 공간감을 선사한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-1"
+    ]
   },
   {
     "id": "art-003",
@@ -30,7 +34,9 @@
     "medium": "종이에 유채",
     "imageUrl": "https://picsum.photos/seed/art-003/800/600",
     "description": "민족의 기상을 상징하는 역동적인 소의 모습. 거친 붓터치가 인상적이다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-1"
+    ]
   },
   {
     "id": "art-004",
@@ -41,7 +47,9 @@
     "medium": "종이에 유채",
     "imageUrl": "https://picsum.photos/seed/art-004/800/600",
     "description": "강렬한 붉은색 배경과 힘찬 황소의 기운이 느껴지는 이중섭의 대표작.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-2"
+    ]
   },
   {
     "id": "art-005",
@@ -52,7 +60,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-005/800/600",
     "description": "전쟁 속에서도 희망을 잃지 않는 서민들의 삶의 현장을 담았다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-2"
+    ]
   },
   {
     "id": "art-006",
@@ -63,7 +73,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-006/800/600",
     "description": "화강암 같은 질감으로 표현된 고목 아래 휴식을 취하는 여인들의 소박한 모습.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-2"
+    ]
   },
   {
     "id": "art-007",
@@ -74,7 +86,9 @@
     "medium": "비디오 설치",
     "imageUrl": "https://picsum.photos/seed/art-007/800/600",
     "description": "1003개의 TV 모니터로 이루어진 백남준의 대표작. 개천절을 상징한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3"
+    ]
   },
   {
     "id": "art-008",
@@ -85,7 +99,9 @@
     "medium": "비디오 설치",
     "imageUrl": "https://picsum.photos/seed/art-008/800/600",
     "description": "과거(부처)와 현재(TV)의 만남을 통한 명상적 질문을 던진다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3"
+    ]
   },
   {
     "id": "art-009",
@@ -96,7 +112,9 @@
     "medium": "종이에 채색",
     "imageUrl": "https://picsum.photos/seed/art-009/800/600",
     "description": "화려한 색채와 몽환적인 분위기가 특징인 천경자 화백의 대표작.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3"
+    ]
   },
   {
     "id": "art-010",
@@ -107,7 +125,10 @@
     "medium": "종이에 채색",
     "imageUrl": "https://picsum.photos/seed/art-010/800/600",
     "description": "35마리의 뱀을 통해 생명의 강인함을 표현한 파격적인 작품.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
   },
   {
     "id": "art-011",
@@ -118,7 +139,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-011/800/600",
     "description": "가족에 대한 사랑을 아이처럼 순수한 시선으로 단순하게 표현했다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
   },
   {
     "id": "art-012",
@@ -129,7 +153,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-012/800/600",
     "description": "동화적인 상상력으로 길조인 까치와 나무, 해를 조화롭게 배치했다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
   },
   {
     "id": "art-013",
@@ -140,7 +167,10 @@
     "medium": "목판화",
     "imageUrl": "https://picsum.photos/seed/art-013/800/600",
     "description": "역동적인 춤사위를 통해 민중의 한과 신명을 표현한 오윤의 대표 목판화.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
   },
   {
     "id": "art-014",
@@ -151,7 +181,10 @@
     "medium": "목판화",
     "imageUrl": "https://picsum.photos/seed/art-014/800/600",
     "description": "어머니와 아이의 모습을 통해 민중의 강인한 생명력을 상징한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
   },
   {
     "id": "art-015",
@@ -162,7 +195,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-015/800/600",
     "description": "청색과 다갈색의 번짐을 통해 깊은 공간감과 명상적인 분위기를 창출한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
   },
   {
     "id": "art-016",
@@ -173,7 +209,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-016/800/600",
     "description": "단순한 구성 속에 응축된 침묵과 성찰의 미학을 보여주는 단색화.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-16"
+    ]
   },
   {
     "id": "art-017",
@@ -184,7 +223,10 @@
     "medium": "캔버스에 아크릴",
     "imageUrl": "https://picsum.photos/seed/art-017/800/600",
     "description": "반복적인 점의 행위를 통해 수행과도 같은 예술의 과정을 보여준다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-16"
+    ]
   },
   {
     "id": "art-018",
@@ -195,7 +237,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-018/800/600",
     "description": "꿈과 무의식의 세계를 초현실주의 화풍으로 그려낸 신비로운 작품.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-3",
+      "ex-17"
+    ]
   },
   {
     "id": "art-019",
@@ -206,7 +251,10 @@
     "medium": "종이에 채색",
     "imageUrl": "https://picsum.photos/seed/art-019/800/600",
     "description": "전통 민화의 책가도 형식을 빌려 현대인의 지적 풍경을 위트있게 표현했다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-4",
+      "ex-17"
+    ]
   },
   {
     "id": "art-020",
@@ -217,7 +265,9 @@
     "medium": "대리석, 브론즈",
     "imageUrl": "https://picsum.photos/seed/art-020/800/600",
     "description": "그리스 신화를 현대적으로 재해석하여 인간의 욕망과 좌절을 조각했다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-5"
+    ]
   },
   {
     "id": "art-021",
@@ -228,7 +278,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-021/800/600",
     "description": "도시의 건축물들을 기하학적인 형태로 재구성하여 차가운 도시의 미학을 탐구한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-5"
+    ]
   },
   {
     "id": "art-022",
@@ -239,7 +291,9 @@
     "medium": "사운드 설치",
     "imageUrl": "https://picsum.photos/seed/art-022/800/600",
     "description": "관객의 목소리를 실시간으로 시각화하여 상호작용의 경험을 제공하는 인터랙티브 아트.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-5"
+    ]
   },
   {
     "id": "art-023",
@@ -250,7 +304,9 @@
     "medium": "종이에 연필",
     "imageUrl": "https://picsum.photos/seed/art-023/800/600",
     "description": "섬세한 인물 드로잉을 통해 현대 사회 속 인간 관계의 복잡미묘함을 포착한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-9"
+    ]
   },
   {
     "id": "art-024",
@@ -261,7 +317,10 @@
     "medium": "혼합 매체 (흙, 씨앗)",
     "imageUrl": "https://picsum.photos/seed/art-024/800/600",
     "description": "자연 분해되는 재료만을 사용하여 생명의 순환이라는 환경적 메시지를 전달한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-9",
+      "ex-17"
+    ]
   },
   {
     "id": "art-025",
@@ -272,7 +331,10 @@
     "medium": "디지털 콜라주",
     "imageUrl": "https://picsum.photos/seed/art-025/800/600",
     "description": "인터넷에 떠도는 수많은 이미지들을 조합하여 현대 사회의 시각적 과잉을 비판한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-10",
+      "ex-18"
+    ]
   },
   {
     "id": "art-026",
@@ -283,7 +345,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-026/800/600",
     "description": "시간의 흐름에 따라 빛 바래고 풍화된 기억의 단편들을 서정적으로 그려낸다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-10",
+      "ex-18"
+    ]
   },
   {
     "id": "art-027",
@@ -294,7 +359,10 @@
     "medium": "단채널 비디오",
     "imageUrl": "https://picsum.photos/seed/art-027/800/600",
     "description": "사적인 공간과 경험을 바탕으로 한 영상과 텍스트를 결합하여 개인의 서사를 풀어낸다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
   },
   {
     "id": "art-028",
@@ -305,7 +373,10 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-028/800/600",
     "description": "사라져가는 도시의 풍경에 대한 애정을 담아 따뜻한 색감으로 재현했다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
   },
   {
     "id": "art-029",
@@ -316,7 +387,10 @@
     "medium": "캔버스에 아크릴",
     "imageUrl": "https://picsum.photos/seed/art-029/800/600",
     "description": "최준서 작가의 내면에 휘몰아치는 감정을 강렬한 색채와 붓터치로 표현한 추상화.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
   },
   {
     "id": "art-030",
@@ -327,6 +401,9 @@
     "medium": "캔버스에 유채",
     "imageUrl": "https://picsum.photos/seed/art-030/800/600",
     "description": "겹겹이 쌓인 물감의 층을 통해 축적된 시간과 기억의 무게를 시각화한다.",
-    "exhibitionIds": []
+    "exhibitionIds": [
+      "ex-13",
+      "ex-20"
+    ]
   }
 ]

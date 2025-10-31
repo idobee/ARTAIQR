@@ -1,0 +1,199 @@
+[
+  {
+    "artworkId": "art-001",
+    "exhibitionIds": [
+      "ex-1"
+    ]
+  },
+  {
+    "artworkId": "art-002",
+    "exhibitionIds": [
+      "ex-1"
+    ]
+  },
+  {
+    "artworkId": "art-003",
+    "exhibitionIds": [
+      "ex-1"
+    ]
+  },
+  {
+    "artworkId": "art-004",
+    "exhibitionIds": [
+      "ex-2"
+    ]
+  },
+  {
+    "artworkId": "art-005",
+    "exhibitionIds": [
+      "ex-2"
+    ]
+  },
+  {
+    "artworkId": "art-006",
+    "exhibitionIds": [
+      "ex-2"
+    ]
+  },
+  {
+    "artworkId": "art-007",
+    "exhibitionIds": [
+      "ex-3"
+    ]
+  },
+  {
+    "artworkId": "art-008",
+    "exhibitionIds": [
+      "ex-3"
+    ]
+  },
+  {
+    "artworkId": "art-009",
+    "exhibitionIds": [
+      "ex-3"
+    ]
+  },
+  {
+    "artworkId": "art-010",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
+  },
+  {
+    "artworkId": "art-011",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
+  },
+  {
+    "artworkId": "art-012",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-13"
+    ]
+  },
+  {
+    "artworkId": "art-013",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
+  },
+  {
+    "artworkId": "art-014",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
+  },
+  {
+    "artworkId": "art-015",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-15"
+    ]
+  },
+  {
+    "artworkId": "art-016",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-16"
+    ]
+  },
+  {
+    "artworkId": "art-017",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-16"
+    ]
+  },
+  {
+    "artworkId": "art-018",
+    "exhibitionIds": [
+      "ex-3",
+      "ex-17"
+    ]
+  },
+  {
+    "artworkId": "art-019",
+    "exhibitionIds": [
+      "ex-4",
+      "ex-17"
+    ]
+  },
+  {
+    "artworkId": "art-020",
+    "exhibitionIds": [
+      "ex-5"
+    ]
+  },
+  {
+    "artworkId": "art-021",
+    "exhibitionIds": [
+      "ex-5"
+    ]
+  },
+  {
+    "artworkId": "art-022",
+    "exhibitionIds": [
+      "ex-5"
+    ]
+  },
+  {
+    "artworkId": "art-023",
+    "exhibitionIds": [
+      "ex-9"
+    ]
+  },
+  {
+    "artworkId": "art-024",
+    "exhibitionIds": [
+      "ex-9",
+      "ex-17"
+    ]
+  },
+  {
+    "artworkId": "art-025",
+    "exhibitionIds": [
+      "ex-10",
+      "ex-18"
+    ]
+  },
+  {
+    "artworkId": "art-026",
+    "exhibitionIds": [
+      "ex-10",
+      "ex-18"
+    ]
+  },
+  {
+    "artworkId": "art-027",
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
+  },
+  {
+    "artworkId": "art-028",
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
+  },
+  {
+    "artworkId": "art-029",
+    "exhibitionIds": [
+      "ex-11",
+      "ex-20"
+    ]
+  },
+  {
+    "artworkId": "art-030",
+    "exhibitionIds": [
+      "ex-13",
+      "ex-20"
+    ]
+  }
+]
